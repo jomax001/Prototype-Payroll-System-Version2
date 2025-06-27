@@ -171,7 +171,7 @@ if (!"Regular Employee".equalsIgnoreCase(role)) {
 int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
 if (confirm == JOptionPane.YES_OPTION) {
     this.dispose();
-    new NewLoginUI().setVisible(true); // bumalik sa login form
+    new NewLoginUI().setVisible(true); // go back to login page
 }
 
     }//GEN-LAST:event_LogoutButtonActionPerformed

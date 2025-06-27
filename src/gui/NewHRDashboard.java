@@ -4,7 +4,11 @@
  */
 package gui;
 
+import auth.service.NewLoginUI;
 import employee.service.EmployeeListForm;
+import employee.service.NewEmployeeListForm;
+import employee.service.NewManageEmployeeForm;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,14 +50,13 @@ public class NewHRDashboard extends javax.swing.JFrame {
         Dashboardlabel = new javax.swing.JLabel();
         titleLabel = new javax.swing.JLabel();
         viewEmployeesButton = new javax.swing.JButton();
-        payslipButton = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
         manageEmployeesButton = new javax.swing.JButton();
         leaveRequestsButton1 = new javax.swing.JButton();
         payslipButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(555, 450));
-        setPreferredSize(new java.awt.Dimension(550, 450));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(59, 115, 185));
@@ -102,7 +105,7 @@ public class NewHRDashboard extends javax.swing.JFrame {
         viewEmployeesButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         viewEmployeesButton.setForeground(new java.awt.Color(255, 255, 255));
         viewEmployeesButton.setText("View Employee List");
-        viewEmployeesButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        viewEmployeesButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         viewEmployeesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewEmployeesButtonActionPerformed(evt);
@@ -110,50 +113,64 @@ public class NewHRDashboard extends javax.swing.JFrame {
         });
         getContentPane().add(viewEmployeesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 250, 40));
 
-        payslipButton.setBackground(new java.awt.Color(59, 115, 185));
-        payslipButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        payslipButton.setForeground(new java.awt.Color(255, 255, 255));
-        payslipButton.setText("Logout");
-        payslipButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        payslipButton.addActionListener(new java.awt.event.ActionListener() {
+        logoutButton.setBackground(new java.awt.Color(59, 115, 185));
+        logoutButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        logoutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logoutButton.setText("Logout");
+        logoutButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                payslipButtonActionPerformed(evt);
+                logoutButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(payslipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 150, 35));
+        getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 150, 35));
 
         manageEmployeesButton.setBackground(new java.awt.Color(59, 115, 185));
         manageEmployeesButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         manageEmployeesButton.setForeground(new java.awt.Color(255, 255, 255));
         manageEmployeesButton.setText("Manage Employees");
-        manageEmployeesButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        manageEmployeesButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        manageEmployeesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageEmployeesButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(manageEmployeesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 250, 40));
 
         leaveRequestsButton1.setBackground(new java.awt.Color(59, 115, 185));
         leaveRequestsButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         leaveRequestsButton1.setForeground(new java.awt.Color(255, 255, 255));
         leaveRequestsButton1.setText("View Leave Requests");
-        leaveRequestsButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        leaveRequestsButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(leaveRequestsButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, 250, 40));
 
         payslipButton1.setBackground(new java.awt.Color(59, 115, 185));
         payslipButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         payslipButton1.setForeground(new java.awt.Color(255, 255, 255));
         payslipButton1.setText("View My Own Payslip");
-        payslipButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        payslipButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(payslipButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 250, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void payslipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payslipButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_payslipButtonActionPerformed
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+if (confirm == JOptionPane.YES_OPTION) {
+    this.dispose();
+    new NewLoginUI().setVisible(true); // go back to login page
+}
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void viewEmployeesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewEmployeesButtonActionPerformed
-    new EmployeeListForm().setVisible(true);
+    new NewEmployeeListForm().setVisible(true);
     this.dispose();
     }//GEN-LAST:event_viewEmployeesButtonActionPerformed
+
+    private void manageEmployeesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEmployeesButtonActionPerformed
+    new NewManageEmployeeForm().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_manageEmployeesButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,8 +181,8 @@ public class NewHRDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel HRlabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton leaveRequestsButton1;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JButton manageEmployeesButton;
-    private javax.swing.JButton payslipButton;
     private javax.swing.JButton payslipButton1;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton viewEmployeesButton;

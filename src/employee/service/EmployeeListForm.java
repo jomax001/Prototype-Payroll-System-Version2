@@ -11,6 +11,7 @@ package employee.service;
 
 import utils.DBConnection;
 import gui.HRDashboard;
+import gui.NewHRDashboard;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
@@ -103,7 +104,7 @@ private void loadEmployeeData() {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
   this.dispose(); // Close the current form
-    new HRDashboard().setVisible(true); // Open the previous/main form
+    new NewHRDashboard().setVisible(true); // Open the previous/main form
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
