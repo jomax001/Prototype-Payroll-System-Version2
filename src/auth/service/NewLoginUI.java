@@ -119,7 +119,6 @@ public class NewLoginUI extends javax.swing.JFrame {
         togglePasswordBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(410, 350));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         loginLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -136,7 +135,8 @@ public class NewLoginUI extends javax.swing.JFrame {
         getContentPane().add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, -1, -1));
 
         roleComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        roleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HR Personnel", "Team Leader", "Payroll Manager", "Accounting Head", "Regular Employee" }));
+        roleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HR Personnel", "Team Leader", "Payroll Manager", "Accounting Head", "Employee" }));
+        roleComboBox.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         roleComboBox.setPreferredSize(new java.awt.Dimension(220, 30));
         getContentPane().add(roleComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
 
@@ -145,7 +145,7 @@ public class NewLoginUI extends javax.swing.JFrame {
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
         loginButton.setText("Login");
         loginButton.setToolTipText("");
-        loginButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        loginButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         loginButton.setFocusPainted(false);
         loginButton.setPreferredSize(new java.awt.Dimension(220, 30));
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +166,7 @@ public class NewLoginUI extends javax.swing.JFrame {
         passwordField.setPreferredSize(new java.awt.Dimension(220, 30));
         getContentPane().add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, -1, -1));
 
+        togglePasswordBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         togglePasswordBtn.setPreferredSize(new java.awt.Dimension(30, 30));
         togglePasswordBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -2,25 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package employee.service;
+package payrollmanager.view;
+
+import gui.PayrollManagerDashboard;
 
 /**
  *
  * @author Jomax
  */
-public class NewEmployeeListForm extends javax.swing.JFrame {
+public class GeneratePayslips extends javax.swing.JFrame {
 
     /**
-     * Creates new form EmployeeList
+     * Creates new form GeneratePayslips
      */
-    public NewEmployeeListForm() {
+    public GeneratePayslips() {
         initComponents();
+        setTitle("Generate Payslips - FinMark Payroll System");
+        setSize(850, 600);
         setLocationRelativeTo(null); // This centers the window
-        setTitle("Employee List - FinMark Payroll System");
-        setSize(900, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-        
     }
 
     /**
@@ -32,34 +33,71 @@ public class NewEmployeeListForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        EmployeeListlabel = new javax.swing.JLabel();
-        ScrollPaneNewEmpList = new javax.swing.JScrollPane();
-        EmployeeListTable = new javax.swing.JTable();
-        SearchField = new javax.swing.JTextField();
-        SearchButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        GeneratePayslipsLabel = new javax.swing.JLabel();
+        FromLabel = new javax.swing.JLabel();
+        FromDateField = new javax.swing.JTextField();
+        ToLabel = new javax.swing.JLabel();
+        FromDateField1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        PayslipPreviewTable = new javax.swing.JTable();
         CloseButton = new javax.swing.JButton();
-        RefreshButton = new javax.swing.JButton();
+        GenerateButton = new javax.swing.JButton();
+        PreviewButton = new javax.swing.JButton();
         ExportButton = new javax.swing.JButton();
-        PrintButton = new javax.swing.JButton();
-        FooterLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Employee List");
-        setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(900, 550));
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(850, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        EmployeeListlabel.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N
-        EmployeeListlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        EmployeeListlabel.setText("Employee List");
-        getContentPane().add(EmployeeListlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 250, 40));
+        jPanel1.setBackground(new java.awt.Color(0, 102, 153));
+        jPanel1.setMinimumSize(new java.awt.Dimension(850, 80));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ScrollPaneNewEmpList.setMinimumSize(new java.awt.Dimension(700, 300));
-        ScrollPaneNewEmpList.setPreferredSize(new java.awt.Dimension(700, 300));
+        GeneratePayslipsLabel.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        GeneratePayslipsLabel.setForeground(new java.awt.Color(255, 255, 255));
+        GeneratePayslipsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        GeneratePayslipsLabel.setText("Generate Payslips");
+        GeneratePayslipsLabel.setToolTipText("Generate Payslips");
+        GeneratePayslipsLabel.setMaximumSize(new java.awt.Dimension(400, 40));
+        GeneratePayslipsLabel.setMinimumSize(new java.awt.Dimension(400, 40));
+        GeneratePayslipsLabel.setPreferredSize(new java.awt.Dimension(400, 40));
+        jPanel1.add(GeneratePayslipsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 400, 40));
 
-        EmployeeListTable.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        EmployeeListTable.setModel(new javax.swing.table.DefaultTableModel(
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 80));
+
+        FromLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FromLabel.setText("From:");
+        FromLabel.setToolTipText("From");
+        FromLabel.setMaximumSize(new java.awt.Dimension(50, 30));
+        FromLabel.setMinimumSize(new java.awt.Dimension(50, 30));
+        FromLabel.setPreferredSize(new java.awt.Dimension(50, 30));
+        getContentPane().add(FromLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 50, 30));
+
+        FromDateField.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        FromDateField.setToolTipText("To Date");
+        FromDateField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        FromDateField.setMinimumSize(new java.awt.Dimension(120, 30));
+        FromDateField.setPreferredSize(new java.awt.Dimension(120, 30));
+        getContentPane().add(FromDateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 120, 30));
+
+        ToLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ToLabel.setText("To:");
+        ToLabel.setToolTipText("To");
+        ToLabel.setMaximumSize(new java.awt.Dimension(30, 30));
+        ToLabel.setMinimumSize(new java.awt.Dimension(30, 30));
+        ToLabel.setPreferredSize(new java.awt.Dimension(30, 30));
+        getContentPane().add(ToLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 30, 30));
+
+        FromDateField1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        FromDateField1.setToolTipText("From Date");
+        FromDateField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        FromDateField1.setMinimumSize(new java.awt.Dimension(120, 30));
+        FromDateField1.setPreferredSize(new java.awt.Dimension(120, 30));
+        getContentPane().add(FromDateField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 120, 30));
+
+        PayslipPreviewTable.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        PayslipPreviewTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -1063,79 +1101,70 @@ public class NewEmployeeListForm extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Emp #", "Last Name", "First Name", "Position", "Department", "Title 6", "Email"
+                "Payslip ID", "Employee #", "Name", "Basic Salary", "Deductions", "Net Pay", "Date Generated"
             }
         ));
-        EmployeeListTable.setGridColor(new java.awt.Color(204, 204, 204));
-        EmployeeListTable.setPreferredSize(new java.awt.Dimension(700, 300));
-        EmployeeListTable.setRowHeight(25);
-        ScrollPaneNewEmpList.setViewportView(EmployeeListTable);
+        PayslipPreviewTable.setRowHeight(25);
+        jScrollPane1.setViewportView(PayslipPreviewTable);
 
-        getContentPane().add(ScrollPaneNewEmpList, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 700, 300));
-
-        SearchField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        SearchField.setToolTipText("Search by Name or ID");
-        SearchField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        SearchField.setPreferredSize(new java.awt.Dimension(100, 30));
-        SearchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchFieldActionPerformed(evt);
-            }
-        });
-        getContentPane().add(SearchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 200, -1));
-
-        SearchButton.setBackground(new java.awt.Color(59, 115, 185));
-        SearchButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        SearchButton.setForeground(new java.awt.Color(255, 255, 255));
-        SearchButton.setText("Search");
-        SearchButton.setToolTipText("Search");
-        SearchButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        SearchButton.setPreferredSize(new java.awt.Dimension(100, 30));
-        getContentPane().add(SearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, -1, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 720, 250));
 
         CloseButton.setBackground(new java.awt.Color(255, 0, 0));
         CloseButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         CloseButton.setForeground(new java.awt.Color(255, 255, 255));
         CloseButton.setText("Close");
         CloseButton.setToolTipText("Close");
-        CloseButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(CloseButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 400, 100, 30));
+        CloseButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        CloseButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        CloseButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        CloseButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        CloseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(CloseButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 420, 120, 35));
 
-        RefreshButton.setBackground(new java.awt.Color(255, 200, 0));
-        RefreshButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        RefreshButton.setForeground(new java.awt.Color(255, 255, 255));
-        RefreshButton.setText("Refresh");
-        RefreshButton.setToolTipText("Refresh");
-        RefreshButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(RefreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 100, 30));
+        GenerateButton.setBackground(new java.awt.Color(0, 128, 0));
+        GenerateButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        GenerateButton.setForeground(new java.awt.Color(255, 255, 255));
+        GenerateButton.setText("Generate");
+        GenerateButton.setToolTipText("Generate");
+        GenerateButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        GenerateButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        GenerateButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        GenerateButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        getContentPane().add(GenerateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 120, 35));
+
+        PreviewButton.setBackground(new java.awt.Color(255, 165, 0));
+        PreviewButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        PreviewButton.setForeground(new java.awt.Color(255, 255, 255));
+        PreviewButton.setText("Preview");
+        PreviewButton.setToolTipText("Preview");
+        PreviewButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        PreviewButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        PreviewButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        PreviewButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        getContentPane().add(PreviewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, 120, 35));
 
         ExportButton.setBackground(new java.awt.Color(255, 0, 255));
         ExportButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         ExportButton.setForeground(new java.awt.Color(255, 255, 255));
         ExportButton.setText("Export");
         ExportButton.setToolTipText("Export");
-        ExportButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(ExportButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 400, 100, 30));
-
-        PrintButton.setBackground(new java.awt.Color(0, 128, 0));
-        PrintButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        PrintButton.setForeground(new java.awt.Color(255, 255, 255));
-        PrintButton.setText("Print");
-        PrintButton.setToolTipText("Print");
-        PrintButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(PrintButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, 100, 30));
-
-        FooterLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        FooterLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        FooterLabel.setText("© 2025 FinMark Payroll System");
-        getContentPane().add(FooterLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 470, 200, 20));
+        ExportButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ExportButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        ExportButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        ExportButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        getContentPane().add(ExportButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, 120, 35));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchFieldActionPerformed
+    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+    this.dispose();
+    new PayrollManagerDashboard().setVisible(true); // go back to Payroll Manager Dashboard page
+    }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1154,35 +1183,36 @@ public class NewEmployeeListForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewEmployeeListForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GeneratePayslips.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewEmployeeListForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GeneratePayslips.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewEmployeeListForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GeneratePayslips.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewEmployeeListForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GeneratePayslips.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewEmployeeListForm().setVisible(true);
+                new GeneratePayslips().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CloseButton;
-    private javax.swing.JTable EmployeeListTable;
-    private javax.swing.JLabel EmployeeListlabel;
     private javax.swing.JButton ExportButton;
-    private javax.swing.JLabel FooterLabel;
-    private javax.swing.JButton PrintButton;
-    private javax.swing.JButton RefreshButton;
-    private javax.swing.JScrollPane ScrollPaneNewEmpList;
-    private javax.swing.JButton SearchButton;
-    private javax.swing.JTextField SearchField;
+    private javax.swing.JTextField FromDateField;
+    private javax.swing.JTextField FromDateField1;
+    private javax.swing.JLabel FromLabel;
+    private javax.swing.JButton GenerateButton;
+    private javax.swing.JLabel GeneratePayslipsLabel;
+    private javax.swing.JTable PayslipPreviewTable;
+    private javax.swing.JButton PreviewButton;
+    private javax.swing.JLabel ToLabel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

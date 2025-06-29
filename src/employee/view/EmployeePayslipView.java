@@ -2,18 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui;
+package employee.view;
+
+import gui.EmployeeDashboard;
+import gui.NewHRDashboard;
 
 /**
  *
  * @author Jomax
  */
-public class MyPayslipView extends javax.swing.JFrame {
+public class EmployeePayslipView extends javax.swing.JFrame {
 
     /**
      * Creates new form MyPayslipView
      */
-    public MyPayslipView() {
+    public EmployeePayslipView() {
         initComponents();
         setLocationRelativeTo(null); // This centers the window
         setTitle("My Payslip - FinMark Payroll System");
@@ -54,7 +57,6 @@ public class MyPayslipView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("My Payslip ");
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -178,6 +180,7 @@ public class MyPayslipView extends javax.swing.JFrame {
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
    this.dispose(); // Close the form
+   new EmployeeDashboard().setVisible(true); // go back to Employee Dashboard page
     }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**
@@ -197,20 +200,23 @@ public class MyPayslipView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MyPayslipView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmployeePayslipView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MyPayslipView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmployeePayslipView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MyPayslipView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmployeePayslipView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MyPayslipView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmployeePayslipView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MyPayslipView().setVisible(true);
+                new EmployeePayslipView().setVisible(true);
             }
         });
     }

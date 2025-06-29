@@ -2,24 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package leave.service;
-
-import gui.NewHRDashboard;
+package teamleaderview;
 
 /**
  *
  * @author Jomax
  */
-public class NewLeaveRequest extends javax.swing.JFrame {
+public class TeamLeaderReportsView extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewLeaveRequest
+     * Creates new form TeamLeaderReportsView
      */
-    public NewLeaveRequest() {
+    public TeamLeaderReportsView() {
         initComponents();
-        setLocationRelativeTo(null); // This centers the window
-        setTitle("Leave Requests - FinMark Payroll System");
+        setTitle("Generate Reports - FinMark Payroll System");
         setSize(800, 500);
+        setLocationRelativeTo(null); // This centers the window
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
     }
@@ -33,25 +31,83 @@ public class NewLeaveRequest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ViewLeaveRequestsLabel = new javax.swing.JLabel();
-        ViewLeaveRequestsScrollPane = new javax.swing.JScrollPane();
-        ViewLeaveRequestsTable = new javax.swing.JTable();
-        ApproveButton = new javax.swing.JButton();
-        RefreshButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        GenerateReportsLabel = new javax.swing.JLabel();
+        SelectReportTypeLabel = new javax.swing.JLabel();
+        reportTypeComboBox = new javax.swing.JComboBox<>();
+        FromLabel = new javax.swing.JLabel();
+        FromDateField = new javax.swing.JTextField();
+        ToLabel = new javax.swing.JLabel();
+        ToDateField = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        GenerateReportsTable = new javax.swing.JTable();
+        ExportButton = new javax.swing.JButton();
+        GenerateButton = new javax.swing.JButton();
+        CloseButton = new javax.swing.JButton();
+        PrintButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Leave Requests");
-        setPreferredSize(new java.awt.Dimension(800, 500));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Generate Reports");
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ViewLeaveRequestsLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        ViewLeaveRequestsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ViewLeaveRequestsLabel.setText("View Leave Requests");
-        getContentPane().add(ViewLeaveRequestsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 300, 40));
+        jPanel1.setBackground(new java.awt.Color(0, 128, 128));
+        jPanel1.setMinimumSize(new java.awt.Dimension(800, 80));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ViewLeaveRequestsTable.setModel(new javax.swing.table.DefaultTableModel(
+        GenerateReportsLabel.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        GenerateReportsLabel.setForeground(new java.awt.Color(255, 255, 255));
+        GenerateReportsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        GenerateReportsLabel.setText("Generate Reports");
+        GenerateReportsLabel.setToolTipText("Generate Reports");
+        GenerateReportsLabel.setMaximumSize(new java.awt.Dimension(400, 40));
+        GenerateReportsLabel.setMinimumSize(new java.awt.Dimension(400, 40));
+        GenerateReportsLabel.setPreferredSize(new java.awt.Dimension(400, 40));
+        jPanel1.add(GenerateReportsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 400, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 80));
+
+        SelectReportTypeLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        SelectReportTypeLabel.setText("Select Report Type:");
+        getContentPane().add(SelectReportTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
+
+        reportTypeComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        reportTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attendance Summary", "Leave History", "Payslip Summary", "Team Performance" }));
+        reportTypeComboBox.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(reportTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 115, 250, 30));
+
+        FromLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FromLabel.setText("From :");
+        FromLabel.setToolTipText("From:");
+        FromLabel.setMaximumSize(new java.awt.Dimension(40, 30));
+        FromLabel.setMinimumSize(new java.awt.Dimension(40, 30));
+        FromLabel.setPreferredSize(new java.awt.Dimension(40, 30));
+        getContentPane().add(FromLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 50, 30));
+
+        FromDateField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        FromDateField.setToolTipText("From Date Field");
+        FromDateField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        FromDateField.setMinimumSize(new java.awt.Dimension(120, 30));
+        FromDateField.setPreferredSize(new java.awt.Dimension(120, 30));
+        getContentPane().add(FromDateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 120, 30));
+
+        ToLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ToLabel.setText("To :");
+        ToLabel.setToolTipText("To :");
+        ToLabel.setMaximumSize(new java.awt.Dimension(30, 30));
+        ToLabel.setMinimumSize(new java.awt.Dimension(30, 30));
+        ToLabel.setPreferredSize(new java.awt.Dimension(30, 30));
+        getContentPane().add(ToLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 30, 30));
+
+        ToDateField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ToDateField.setToolTipText("To Date Field");
+        ToDateField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        ToDateField.setMinimumSize(new java.awt.Dimension(120, 30));
+        ToDateField.setPreferredSize(new java.awt.Dimension(120, 30));
+        getContentPane().add(ToDateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 120, 30));
+
+        GenerateReportsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -1055,86 +1111,118 @@ public class NewLeaveRequest extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Employee Name", "Leave Type", "Start Date", "End Date", "Status"
+                "Employee ID", "Name", "Report Type", "Date", "Details"
             }
         ));
-        ViewLeaveRequestsScrollPane.setViewportView(ViewLeaveRequestsTable);
+        jScrollPane1.setViewportView(GenerateReportsTable);
 
-        getContentPane().add(ViewLeaveRequestsScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 700, 280));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 600, 180));
 
-        ApproveButton.setBackground(new java.awt.Color(0, 128, 0));
-        ApproveButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ApproveButton.setForeground(new java.awt.Color(255, 255, 255));
-        ApproveButton.setText("Approve");
-        ApproveButton.setToolTipText("Approve");
-        ApproveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(ApproveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 100, 30));
+        ExportButton.setBackground(new java.awt.Color(255, 165, 0));
+        ExportButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        ExportButton.setForeground(new java.awt.Color(255, 255, 255));
+        ExportButton.setText("Export");
+        ExportButton.setToolTipText("Export");
+        ExportButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ExportButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        ExportButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        ExportButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        getContentPane().add(ExportButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 120, 35));
 
-        RefreshButton.setBackground(new java.awt.Color(255, 165, 0));
-        RefreshButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        RefreshButton.setForeground(new java.awt.Color(255, 255, 255));
-        RefreshButton.setText("Refresh");
-        RefreshButton.setToolTipText("Refresh");
-        RefreshButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(RefreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, 100, 30));
+        GenerateButton.setBackground(new java.awt.Color(0, 128, 0));
+        GenerateButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        GenerateButton.setForeground(new java.awt.Color(255, 255, 255));
+        GenerateButton.setText("Generate");
+        GenerateButton.setToolTipText("Generate");
+        GenerateButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        GenerateButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        GenerateButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        GenerateButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        getContentPane().add(GenerateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 120, 35));
 
-        jButton3.setBackground(new java.awt.Color(128, 128, 128));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Close");
-        jButton3.setToolTipText("Close");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        CloseButton.setBackground(new java.awt.Color(128, 128, 128));
+        CloseButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        CloseButton.setForeground(new java.awt.Color(255, 255, 255));
+        CloseButton.setText("Close");
+        CloseButton.setToolTipText("Close");
+        CloseButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        CloseButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        CloseButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        CloseButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        CloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                CloseButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 400, 100, 30));
+        getContentPane().add(CloseButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, 120, 35));
 
-        jButton4.setBackground(new java.awt.Color(255, 0, 0));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Reject");
-        jButton4.setToolTipText("Reject");
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 100, 30));
+        PrintButton.setBackground(new java.awt.Color(0, 102, 204));
+        PrintButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        PrintButton.setForeground(new java.awt.Color(255, 255, 255));
+        PrintButton.setText("Print");
+        PrintButton.setToolTipText("Print");
+        PrintButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        PrintButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        PrintButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        PrintButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        getContentPane().add(PrintButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 420, 120, 35));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    this.dispose(); // Close the form
-    new NewHRDashboard().setVisible(true); // go back to HR Dashboard page
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+this.dispose(); // Closes the window
+    }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    // Set the Nimbus look and feel
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TeamLeaderReportsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TeamLeaderReportsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TeamLeaderReportsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TeamLeaderReportsView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TeamLeaderReportsView().setVisible(true);
+            }
+        });
     }
-    // Launch the GUI
-    java.awt.EventQueue.invokeLater(() -> {
-        new NewLeaveRequest().setVisible(true);
-    });
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ApproveButton;
-    private javax.swing.JButton RefreshButton;
-    private javax.swing.JLabel ViewLeaveRequestsLabel;
-    private javax.swing.JScrollPane ViewLeaveRequestsScrollPane;
-    private javax.swing.JTable ViewLeaveRequestsTable;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton CloseButton;
+    private javax.swing.JButton ExportButton;
+    private javax.swing.JTextField FromDateField;
+    private javax.swing.JLabel FromLabel;
+    private javax.swing.JButton GenerateButton;
+    private javax.swing.JLabel GenerateReportsLabel;
+    private javax.swing.JTable GenerateReportsTable;
+    private javax.swing.JButton PrintButton;
+    private javax.swing.JLabel SelectReportTypeLabel;
+    private javax.swing.JTextField ToDateField;
+    private javax.swing.JLabel ToLabel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> reportTypeComboBox;
     // End of variables declaration//GEN-END:variables
 }

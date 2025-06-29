@@ -4,11 +4,13 @@
  */
 package gui;
 
+import employee.view.EmployeePayslipView;
 import auth.service.NewLoginUI;
-import employee.service.EmployeeListForm;
-import employee.service.NewEmployeeListForm;
-import employee.service.NewManageEmployeeForm;
+import hr.view.EmployeeListForm;
+import hr.view.NewEmployeeListForm;
+import hr.view.NewManageEmployeeForm;
 import javax.swing.JOptionPane;
+import leave.service.NewLeaveRequest;
 
 /**
  *
@@ -21,9 +23,9 @@ public class NewHRDashboard extends javax.swing.JFrame {
      */
     public NewHRDashboard() {
         initComponents();
-        setLocationRelativeTo(null); // This centers the window
         setTitle("HR Dashboard - FinMark Payroll System");
         setSize(400, 350);
+        setLocationRelativeTo(null); // This centers the window
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
     }
@@ -116,6 +118,7 @@ public class NewHRDashboard extends javax.swing.JFrame {
         logoutButton.setBackground(new java.awt.Color(59, 115, 185));
         logoutButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         logoutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/logout.png"))); // NOI18N
         logoutButton.setText("Logout");
         logoutButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +145,11 @@ public class NewHRDashboard extends javax.swing.JFrame {
         leaveRequestsButton1.setForeground(new java.awt.Color(255, 255, 255));
         leaveRequestsButton1.setText("View Leave Requests");
         leaveRequestsButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        leaveRequestsButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveRequestsButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(leaveRequestsButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, 250, 40));
 
         payslipButton1.setBackground(new java.awt.Color(59, 115, 185));
@@ -149,6 +157,11 @@ public class NewHRDashboard extends javax.swing.JFrame {
         payslipButton1.setForeground(new java.awt.Color(255, 255, 255));
         payslipButton1.setText("View My Own Payslip");
         payslipButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        payslipButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payslipButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(payslipButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 250, 40));
 
         pack();
@@ -171,6 +184,16 @@ if (confirm == JOptionPane.YES_OPTION) {
     new NewManageEmployeeForm().setVisible(true);
     this.dispose();
     }//GEN-LAST:event_manageEmployeesButtonActionPerformed
+
+    private void leaveRequestsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveRequestsButton1ActionPerformed
+    new NewLeaveRequest().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_leaveRequestsButton1ActionPerformed
+
+    private void payslipButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payslipButton1ActionPerformed
+    new EmployeePayslipView().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_payslipButton1ActionPerformed
 
     /**
      * @param args the command line arguments

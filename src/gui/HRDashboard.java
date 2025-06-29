@@ -6,7 +6,7 @@ package gui;
 
 import utils.SessionManager;
 import auth.service.JWTUtil;
-import employee.service.ManageEmployeeForm;
+import hr.view.ManageEmployeeForm;
 import auth.service.LoginController;
 import auth.service.NewLoginUI;
 import javax.swing.JOptionPane;

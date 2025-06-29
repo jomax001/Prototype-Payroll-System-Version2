@@ -2,24 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package leave.service;
-
-import gui.NewHRDashboard;
+package teamleaderview;
 
 /**
  *
  * @author Jomax
  */
-public class NewLeaveRequest extends javax.swing.JFrame {
+public class UpdateTeamInfoView extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewLeaveRequest
+     * Creates new form UpdateTeamInfoView
      */
-    public NewLeaveRequest() {
+    public UpdateTeamInfoView() {
         initComponents();
+        setTitle("Update Team Info - FinMark Payroll System");
+        setSize(800, 650);
         setLocationRelativeTo(null); // This centers the window
-        setTitle("Leave Requests - FinMark Payroll System");
-        setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
     }
@@ -33,25 +31,185 @@ public class NewLeaveRequest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ViewLeaveRequestsLabel = new javax.swing.JLabel();
-        ViewLeaveRequestsScrollPane = new javax.swing.JScrollPane();
-        ViewLeaveRequestsTable = new javax.swing.JTable();
-        ApproveButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        UpdateTeamInfoLabel = new javax.swing.JLabel();
+        NameLabel = new javax.swing.JLabel();
+        EmployeeIDLabel = new javax.swing.JLabel();
+        TeamNameLabel = new javax.swing.JLabel();
+        PositionLabel = new javax.swing.JLabel();
+        ImmediateSupervisorlabel = new javax.swing.JLabel();
+        teamNameField = new javax.swing.JTextField();
+        empIDField = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
+        positionField1 = new javax.swing.JTextField();
+        supervisorField = new javax.swing.JTextField();
+        CloseButton = new javax.swing.JButton();
+        UpdateButton = new javax.swing.JButton();
+        ClearButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        UpdateTeamInfoTable = new javax.swing.JTable();
         RefreshButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Leave Requests");
-        setPreferredSize(new java.awt.Dimension(800, 500));
+        setMinimumSize(new java.awt.Dimension(750, 650));
+        setPreferredSize(new java.awt.Dimension(750, 650));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ViewLeaveRequestsLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        ViewLeaveRequestsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ViewLeaveRequestsLabel.setText("View Leave Requests");
-        getContentPane().add(ViewLeaveRequestsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 300, 40));
+        jPanel1.setBackground(new java.awt.Color(0, 128, 128));
+        jPanel1.setMinimumSize(new java.awt.Dimension(800, 80));
+        jPanel1.setPreferredSize(new java.awt.Dimension(800, 80));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ViewLeaveRequestsTable.setModel(new javax.swing.table.DefaultTableModel(
+        UpdateTeamInfoLabel.setFont(new java.awt.Font("Segoe UI", 0, 28)); // NOI18N
+        UpdateTeamInfoLabel.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateTeamInfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        UpdateTeamInfoLabel.setText("Update Team Info");
+        UpdateTeamInfoLabel.setToolTipText("Update Team Info");
+        UpdateTeamInfoLabel.setMaximumSize(new java.awt.Dimension(400, 40));
+        UpdateTeamInfoLabel.setMinimumSize(new java.awt.Dimension(400, 40));
+        UpdateTeamInfoLabel.setPreferredSize(new java.awt.Dimension(400, 40));
+        jPanel1.add(UpdateTeamInfoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 400, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 80));
+
+        NameLabel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        NameLabel.setText("Name:");
+        NameLabel.setToolTipText("Name");
+        NameLabel.setMaximumSize(new java.awt.Dimension(250, 30));
+        NameLabel.setMinimumSize(new java.awt.Dimension(250, 30));
+        NameLabel.setPreferredSize(new java.awt.Dimension(250, 30));
+        getContentPane().add(NameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 250, 30));
+
+        EmployeeIDLabel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        EmployeeIDLabel.setText("Employee ID:");
+        EmployeeIDLabel.setToolTipText("Employee ID");
+        EmployeeIDLabel.setMaximumSize(new java.awt.Dimension(250, 30));
+        EmployeeIDLabel.setMinimumSize(new java.awt.Dimension(250, 30));
+        EmployeeIDLabel.setPreferredSize(new java.awt.Dimension(250, 30));
+        getContentPane().add(EmployeeIDLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 250, 30));
+
+        TeamNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        TeamNameLabel.setText("Team Name:");
+        TeamNameLabel.setToolTipText("Team Name");
+        TeamNameLabel.setMaximumSize(new java.awt.Dimension(250, 30));
+        TeamNameLabel.setMinimumSize(new java.awt.Dimension(250, 30));
+        TeamNameLabel.setPreferredSize(new java.awt.Dimension(250, 30));
+        getContentPane().add(TeamNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, 250, 30));
+
+        PositionLabel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        PositionLabel.setText("Position:");
+        PositionLabel.setToolTipText("Position");
+        PositionLabel.setMaximumSize(new java.awt.Dimension(250, 30));
+        PositionLabel.setMinimumSize(new java.awt.Dimension(250, 30));
+        PositionLabel.setPreferredSize(new java.awt.Dimension(250, 30));
+        getContentPane().add(PositionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 250, 30));
+
+        ImmediateSupervisorlabel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        ImmediateSupervisorlabel.setText("Immediate Supervisor:");
+        ImmediateSupervisorlabel.setToolTipText("Immediate Supervisor");
+        ImmediateSupervisorlabel.setMaximumSize(new java.awt.Dimension(250, 30));
+        ImmediateSupervisorlabel.setMinimumSize(new java.awt.Dimension(250, 30));
+        ImmediateSupervisorlabel.setPreferredSize(new java.awt.Dimension(250, 30));
+        getContentPane().add(ImmediateSupervisorlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 250, 30));
+
+        teamNameField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        teamNameField.setToolTipText("Team Name");
+        teamNameField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        teamNameField.setMinimumSize(new java.awt.Dimension(250, 30));
+        teamNameField.setPreferredSize(new java.awt.Dimension(250, 30));
+        teamNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teamNameFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(teamNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 260, 250, 30));
+
+        empIDField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        empIDField.setToolTipText("Employee ID");
+        empIDField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        empIDField.setMinimumSize(new java.awt.Dimension(250, 30));
+        empIDField.setPreferredSize(new java.awt.Dimension(250, 30));
+        empIDField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empIDFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(empIDField, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 100, 250, 30));
+
+        nameField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        nameField.setToolTipText("Name");
+        nameField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        nameField.setMinimumSize(new java.awt.Dimension(250, 30));
+        nameField.setPreferredSize(new java.awt.Dimension(250, 30));
+        nameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(nameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 140, 250, 30));
+
+        positionField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        positionField1.setToolTipText("Position");
+        positionField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        positionField1.setMinimumSize(new java.awt.Dimension(250, 30));
+        positionField1.setPreferredSize(new java.awt.Dimension(250, 30));
+        positionField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                positionField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(positionField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 180, 250, 30));
+
+        supervisorField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        supervisorField.setToolTipText("Position");
+        supervisorField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        supervisorField.setMinimumSize(new java.awt.Dimension(250, 30));
+        supervisorField.setPreferredSize(new java.awt.Dimension(250, 30));
+        supervisorField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supervisorFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(supervisorField, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 220, 250, 30));
+
+        CloseButton.setBackground(new java.awt.Color(255, 0, 0));
+        CloseButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        CloseButton.setForeground(new java.awt.Color(255, 255, 255));
+        CloseButton.setText("Close");
+        CloseButton.setToolTipText("Close");
+        CloseButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        CloseButton.setMaximumSize(new java.awt.Dimension(100, 35));
+        CloseButton.setMinimumSize(new java.awt.Dimension(100, 35));
+        CloseButton.setPreferredSize(new java.awt.Dimension(100, 35));
+        CloseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(CloseButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 100, 35));
+
+        UpdateButton.setBackground(new java.awt.Color(0, 128, 0));
+        UpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        UpdateButton.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateButton.setText("Update");
+        UpdateButton.setToolTipText("Update");
+        UpdateButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(UpdateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, 100, 35));
+
+        ClearButton.setBackground(new java.awt.Color(255, 165, 0));
+        ClearButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        ClearButton.setForeground(new java.awt.Color(255, 255, 255));
+        ClearButton.setText("Clear");
+        ClearButton.setToolTipText("Clear");
+        ClearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ClearButton.setMaximumSize(new java.awt.Dimension(100, 35));
+        ClearButton.setMinimumSize(new java.awt.Dimension(100, 35));
+        ClearButton.setPreferredSize(new java.awt.Dimension(100, 35));
+        getContentPane().add(ClearButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 100, 35));
+
+        UpdateTeamInfoTable.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        UpdateTeamInfoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -1055,86 +1213,101 @@ public class NewLeaveRequest extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Employee Name", "Leave Type", "Start Date", "End Date", "Status"
+                "Employee ID", "Name", "Position", "Supervisor", "Team Name"
             }
         ));
-        ViewLeaveRequestsScrollPane.setViewportView(ViewLeaveRequestsTable);
+        jScrollPane1.setViewportView(UpdateTeamInfoTable);
 
-        getContentPane().add(ViewLeaveRequestsScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 700, 280));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 650, 200));
 
-        ApproveButton.setBackground(new java.awt.Color(0, 128, 0));
-        ApproveButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ApproveButton.setForeground(new java.awt.Color(255, 255, 255));
-        ApproveButton.setText("Approve");
-        ApproveButton.setToolTipText("Approve");
-        ApproveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(ApproveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 100, 30));
-
-        RefreshButton.setBackground(new java.awt.Color(255, 165, 0));
-        RefreshButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        RefreshButton.setBackground(new java.awt.Color(0, 139, 139));
+        RefreshButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         RefreshButton.setForeground(new java.awt.Color(255, 255, 255));
         RefreshButton.setText("Refresh");
         RefreshButton.setToolTipText("Refresh");
         RefreshButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(RefreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, 100, 30));
-
-        jButton3.setBackground(new java.awt.Color(128, 128, 128));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Close");
-        jButton3.setToolTipText("Close");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 400, 100, 30));
-
-        jButton4.setBackground(new java.awt.Color(255, 0, 0));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Reject");
-        jButton4.setToolTipText("Reject");
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 100, 30));
+        getContentPane().add(RefreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, 100, 35));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    this.dispose(); // Close the form
-    new NewHRDashboard().setVisible(true); // go back to HR Dashboard page
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void teamNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_teamNameFieldActionPerformed
+
+    private void empIDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empIDFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_empIDFieldActionPerformed
+
+    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameFieldActionPerformed
+
+    private void positionField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_positionField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_positionField1ActionPerformed
+
+    private void supervisorFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supervisorFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supervisorFieldActionPerformed
+
+    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+this.dispose(); // Closes the current window
+    }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    // Set the Nimbus look and feel
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(UpdateTeamInfoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(UpdateTeamInfoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(UpdateTeamInfoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(UpdateTeamInfoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new UpdateTeamInfoView().setVisible(true);
+            }
+        });
     }
-    // Launch the GUI
-    java.awt.EventQueue.invokeLater(() -> {
-        new NewLeaveRequest().setVisible(true);
-    });
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ApproveButton;
+    private javax.swing.JButton ClearButton;
+    private javax.swing.JButton CloseButton;
+    private javax.swing.JLabel EmployeeIDLabel;
+    private javax.swing.JLabel ImmediateSupervisorlabel;
+    private javax.swing.JLabel NameLabel;
+    private javax.swing.JLabel PositionLabel;
     private javax.swing.JButton RefreshButton;
-    private javax.swing.JLabel ViewLeaveRequestsLabel;
-    private javax.swing.JScrollPane ViewLeaveRequestsScrollPane;
-    private javax.swing.JTable ViewLeaveRequestsTable;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel TeamNameLabel;
+    private javax.swing.JButton UpdateButton;
+    private javax.swing.JLabel UpdateTeamInfoLabel;
+    private javax.swing.JTable UpdateTeamInfoTable;
+    private javax.swing.JTextField empIDField;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JTextField positionField1;
+    private javax.swing.JTextField supervisorField;
+    private javax.swing.JTextField teamNameField;
     // End of variables declaration//GEN-END:variables
 }

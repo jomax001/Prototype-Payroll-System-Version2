@@ -2,23 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package leave.service;
+package accounting.view;
 
-import gui.NewHRDashboard;
+import gui.AccountingHeadDashboard;
 
 /**
  *
  * @author Jomax
  */
-public class NewLeaveRequest extends javax.swing.JFrame {
+public class AuditTrailView extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewLeaveRequest
+     * Creates new form AuditTrailView
      */
-    public NewLeaveRequest() {
+    public AuditTrailView() {
         initComponents();
         setLocationRelativeTo(null); // This centers the window
-        setTitle("Leave Requests - FinMark Payroll System");
+        setTitle("Audit Trail Logs - FinMark Payroll System");
         setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -33,25 +33,39 @@ public class NewLeaveRequest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ViewLeaveRequestsLabel = new javax.swing.JLabel();
-        ViewLeaveRequestsScrollPane = new javax.swing.JScrollPane();
-        ViewLeaveRequestsTable = new javax.swing.JTable();
-        ApproveButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        AuditTrailLogsLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        AuditTrailLogsTable = new javax.swing.JTable();
+        CloseButton = new javax.swing.JButton();
         RefreshButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        ExportButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Leave Requests");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("AuditTrailView");
+        setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(800, 500));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ViewLeaveRequestsLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        ViewLeaveRequestsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ViewLeaveRequestsLabel.setText("View Leave Requests");
-        getContentPane().add(ViewLeaveRequestsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 300, 40));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 102));
+        jPanel1.setMinimumSize(new java.awt.Dimension(800, 80));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ViewLeaveRequestsTable.setModel(new javax.swing.table.DefaultTableModel(
+        AuditTrailLogsLabel.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        AuditTrailLogsLabel.setForeground(new java.awt.Color(255, 255, 255));
+        AuditTrailLogsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        AuditTrailLogsLabel.setText("Audit Trail Logs");
+        AuditTrailLogsLabel.setToolTipText("Audit Trail Logs");
+        AuditTrailLogsLabel.setMaximumSize(new java.awt.Dimension(500, 40));
+        AuditTrailLogsLabel.setMinimumSize(new java.awt.Dimension(500, 40));
+        AuditTrailLogsLabel.setPreferredSize(new java.awt.Dimension(400, 40));
+        jPanel1.add(AuditTrailLogsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 500, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 80));
+
+        AuditTrailLogsTable.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        AuditTrailLogsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -1055,86 +1069,101 @@ public class NewLeaveRequest extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Employee Name", "Leave Type", "Start Date", "End Date", "Status"
+                "Date & Time", "Username", "Role", "Activity", "Affected Module/IP"
             }
         ));
-        ViewLeaveRequestsScrollPane.setViewportView(ViewLeaveRequestsTable);
+        jScrollPane1.setViewportView(AuditTrailLogsTable);
 
-        getContentPane().add(ViewLeaveRequestsScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 700, 280));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 700, 280));
 
-        ApproveButton.setBackground(new java.awt.Color(0, 128, 0));
-        ApproveButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ApproveButton.setForeground(new java.awt.Color(255, 255, 255));
-        ApproveButton.setText("Approve");
-        ApproveButton.setToolTipText("Approve");
-        ApproveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(ApproveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 100, 30));
+        CloseButton.setBackground(new java.awt.Color(255, 0, 0));
+        CloseButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        CloseButton.setForeground(new java.awt.Color(255, 255, 255));
+        CloseButton.setText("Close");
+        CloseButton.setToolTipText("Close");
+        CloseButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        CloseButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        CloseButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        CloseButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        CloseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(CloseButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 400, 120, 35));
 
-        RefreshButton.setBackground(new java.awt.Color(255, 165, 0));
-        RefreshButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        RefreshButton.setBackground(new java.awt.Color(34, 139, 34));
+        RefreshButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         RefreshButton.setForeground(new java.awt.Color(255, 255, 255));
         RefreshButton.setText("Refresh");
         RefreshButton.setToolTipText("Refresh");
-        RefreshButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(RefreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, 100, 30));
+        RefreshButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        RefreshButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        RefreshButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        RefreshButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        getContentPane().add(RefreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 120, 35));
 
-        jButton3.setBackground(new java.awt.Color(128, 128, 128));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Close");
-        jButton3.setToolTipText("Close");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 400, 100, 30));
-
-        jButton4.setBackground(new java.awt.Color(255, 0, 0));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Reject");
-        jButton4.setToolTipText("Reject");
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 100, 30));
+        ExportButton.setBackground(new java.awt.Color(255, 0, 255));
+        ExportButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        ExportButton.setForeground(new java.awt.Color(255, 255, 255));
+        ExportButton.setText("Export");
+        ExportButton.setToolTipText("Export");
+        ExportButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ExportButton.setMaximumSize(new java.awt.Dimension(120, 35));
+        ExportButton.setMinimumSize(new java.awt.Dimension(120, 35));
+        ExportButton.setPreferredSize(new java.awt.Dimension(120, 35));
+        getContentPane().add(ExportButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, 120, 35));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    this.dispose(); // Close the form
-    new NewHRDashboard().setVisible(true); // go back to HR Dashboard page
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+    this.dispose();
+    new AccountingHeadDashboard().setVisible(true); // go back to Accounting Head Dashboard page
+    }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    // Set the Nimbus look and feel
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AuditTrailView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AuditTrailView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AuditTrailView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AuditTrailView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AuditTrailView().setVisible(true);
+            }
+        });
     }
-    // Launch the GUI
-    java.awt.EventQueue.invokeLater(() -> {
-        new NewLeaveRequest().setVisible(true);
-    });
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ApproveButton;
+    private javax.swing.JLabel AuditTrailLogsLabel;
+    private javax.swing.JTable AuditTrailLogsTable;
+    private javax.swing.JButton CloseButton;
+    private javax.swing.JButton ExportButton;
     private javax.swing.JButton RefreshButton;
-    private javax.swing.JLabel ViewLeaveRequestsLabel;
-    private javax.swing.JScrollPane ViewLeaveRequestsScrollPane;
-    private javax.swing.JTable ViewLeaveRequestsTable;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
