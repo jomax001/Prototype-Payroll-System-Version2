@@ -1,6 +1,5 @@
 package gui;
 
-import auth.service.LoginController;
 import auth.service.NewLoginUI;
 
 /**

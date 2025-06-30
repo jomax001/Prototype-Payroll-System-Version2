@@ -1,7 +1,7 @@
 package employee.service;
 
 import utils.SessionManager;
-import auth.service.JWTUtil;
+import utils.JWTUtil;
 
 public class EmployeeService {
 

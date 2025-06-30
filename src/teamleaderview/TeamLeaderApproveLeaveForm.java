@@ -4,6 +4,8 @@
  */
 package teamleaderview;
 
+import gui.TeamLeaderDashboard;
+
 /**
  *
  * @author Jomax
@@ -1109,6 +1111,7 @@ public class TeamLeaderApproveLeaveForm extends javax.swing.JFrame {
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
 this.dispose(); // This will close the page
+new TeamLeaderDashboard().setVisible(true); // go back to Team Leader Dashboard page
     }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**

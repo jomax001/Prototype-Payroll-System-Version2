@@ -4,6 +4,8 @@
  */
 package teamleaderview;
 
+import gui.TeamLeaderDashboard;
+
 /**
  *
  * @author Jomax
@@ -1252,7 +1254,8 @@ public class UpdateTeamInfoView extends javax.swing.JFrame {
     }//GEN-LAST:event_supervisorFieldActionPerformed
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
-this.dispose(); // Closes the current window
+    this.dispose(); // Closes the current window
+    new TeamLeaderDashboard().setVisible(true); // go back to Team Leader Dashboard page
     }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**

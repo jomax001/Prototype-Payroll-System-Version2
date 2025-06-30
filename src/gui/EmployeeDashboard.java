@@ -8,8 +8,10 @@ import auth.service.NewLoginUI;
 import employee.view.EmployeePayslipView;
 import employee.view.EmployeeAttendanceView;
 import employee.view.EmployeeLeaveRequestsView;
-import hr.view.NewEmployeeListForm;
+import java.io.File;
 import javax.swing.JOptionPane;
+import utils.JWTUtil;
+import utils.SessionManager;
 
 /**
  *
@@ -20,6 +22,8 @@ public class EmployeeDashboard extends javax.swing.JFrame {
     /**
      * Creates new form EmployeeDashboard
      */
+    private javax.swing.Timer tokenMonitor;
+    
     public EmployeeDashboard() {
         initComponents();
         setLocationRelativeTo(null); // This centers the window
@@ -27,7 +31,22 @@ public class EmployeeDashboard extends javax.swing.JFrame {
         setSize(600, 450);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        startTokenMonitor(); // Start the token watcher
     }
+    
+    // ✅ This method checks token expiration every minute
+private void startTokenMonitor() {
+    tokenMonitor = new javax.swing.Timer(60000, e -> {
+        String token = SessionManager.getToken();
+        if (token == null || !JWTUtil.validateToken(token)) {
+            JOptionPane.showMessageDialog(this, "Your session has expired. Please log in again.");
+            SessionManager.logout();
+            dispose(); // Close dashboard
+            new NewLoginUI().setVisible(true); // Return to login
+        }
+    });
+    tokenMonitor.start();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,11 +153,25 @@ public class EmployeeDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
+    // Show confirmation dialog to the user
     int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
-if (confirm == JOptionPane.YES_OPTION) {
-    this.dispose();
-    new NewLoginUI().setVisible(true); // go back to login page
-}
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Clear stored session information (username, role, token)
+        SessionManager.logout();
+
+        // Delete the saved token file if it exists
+        File tokenFile = new File("remember_token.dat");
+        if (tokenFile.exists()) {
+            tokenFile.delete(); // Remove saved JWT token used by 'Remember Me'
+        }
+
+        // Close the current dashboard window
+        this.dispose();
+
+        // Open the login screen again
+        new NewLoginUI().setVisible(true);
+    }
     }//GEN-LAST:event_LogoutButtonActionPerformed
 
     private void ViewPayslipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewPayslipButtonActionPerformed

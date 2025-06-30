@@ -6,7 +6,13 @@ package gui;
 
 import teamleaderview.TeamAttendanceView;
 import auth.service.NewLoginUI;
+import java.io.File;
 import javax.swing.JOptionPane;
+import teamleaderview.TeamLeaderApproveLeaveForm;
+import teamleaderview.TeamLeaderReportsView;
+import teamleaderview.UpdateTeamInfoView;
+import utils.JWTUtil;
+import utils.SessionManager;
 
 /**
  *
@@ -17,6 +23,8 @@ public class TeamLeaderDashboard extends javax.swing.JFrame {
     /**
      * Creates new form TeamLeader
      */
+    private javax.swing.Timer tokenMonitor;
+    
     public TeamLeaderDashboard() {
         initComponents();
         setLocationRelativeTo(null); // This centers the window
@@ -24,7 +32,22 @@ public class TeamLeaderDashboard extends javax.swing.JFrame {
         setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        startTokenMonitor(); // Start the token watcher
     }
+    
+    // This method checks token expiration every minute
+private void startTokenMonitor() {
+    tokenMonitor = new javax.swing.Timer(60000, e -> {
+        String token = SessionManager.getToken();
+        if (token == null || !JWTUtil.validateToken(token)) {
+            JOptionPane.showMessageDialog(this, "Your session has expired. Please log in again.");
+            SessionManager.logout();
+            dispose(); // Close dashboard
+            new NewLoginUI().setVisible(true); // Return to login
+        }
+    });
+    tokenMonitor.start();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,6 +93,11 @@ public class TeamLeaderDashboard extends javax.swing.JFrame {
         jButton1.setMaximumSize(new java.awt.Dimension(200, 40));
         jButton1.setMinimumSize(new java.awt.Dimension(200, 40));
         jButton1.setPreferredSize(new java.awt.Dimension(200, 40));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 200, 40));
 
         ViewTeamAttendanceButton.setBackground(new java.awt.Color(0, 139, 139));
@@ -114,6 +142,11 @@ public class TeamLeaderDashboard extends javax.swing.JFrame {
         ApproveLeaveButton.setMaximumSize(new java.awt.Dimension(200, 40));
         ApproveLeaveButton.setMinimumSize(new java.awt.Dimension(200, 40));
         ApproveLeaveButton.setPreferredSize(new java.awt.Dimension(200, 40));
+        ApproveLeaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApproveLeaveButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(ApproveLeaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 200, 40));
 
         GenerateReportsButton.setBackground(new java.awt.Color(255, 140, 0));
@@ -125,6 +158,11 @@ public class TeamLeaderDashboard extends javax.swing.JFrame {
         GenerateReportsButton.setMaximumSize(new java.awt.Dimension(200, 40));
         GenerateReportsButton.setMinimumSize(new java.awt.Dimension(200, 40));
         GenerateReportsButton.setPreferredSize(new java.awt.Dimension(200, 40));
+        GenerateReportsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenerateReportsButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(GenerateReportsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 200, 40));
 
         pack();
@@ -135,12 +173,41 @@ public class TeamLeaderDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_ViewTeamAttendanceButtonActionPerformed
 
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
-   int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
-if (confirm == JOptionPane.YES_OPTION) {
-    this.dispose();
-    new NewLoginUI().setVisible(true); // go back to login page
-}
+    // Show confirmation dialog to the user
+    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Clear stored session information (username, role, token)
+        SessionManager.logout();
+
+        // Delete the saved token file if it exists
+        File tokenFile = new File("remember_token.dat");
+        if (tokenFile.exists()) {
+            tokenFile.delete(); // Remove saved JWT token used by 'Remember Me'
+        }
+
+        // Close the current dashboard window
+        this.dispose();
+
+        // Open the login screen again
+        new NewLoginUI().setVisible(true);
+    }
     }//GEN-LAST:event_LogoutButtonActionPerformed
+
+    private void ApproveLeaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApproveLeaveButtonActionPerformed
+    new TeamLeaderApproveLeaveForm().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_ApproveLeaveButtonActionPerformed
+
+    private void GenerateReportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateReportsButtonActionPerformed
+    new TeamLeaderReportsView().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_GenerateReportsButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    new UpdateTeamInfoView().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

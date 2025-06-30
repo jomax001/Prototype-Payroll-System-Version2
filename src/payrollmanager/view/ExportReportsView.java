@@ -4,7 +4,6 @@
  */
 package payrollmanager.view;
 
-import gui.AccountingHeadDashboard;
 import gui.PayrollManagerDashboard;
 
 /**

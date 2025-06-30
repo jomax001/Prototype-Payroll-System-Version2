@@ -4,9 +4,14 @@
  */
 package gui;
 
+import accounting.view.ApproveFinalReports;
 import accounting.view.AuditTrailView;
+import accounting.view.ViewPayrollReports;
 import auth.service.NewLoginUI;
+import java.io.File;
 import javax.swing.JOptionPane;
+import utils.JWTUtil;
+import utils.SessionManager;
 
 /**
  *
@@ -17,6 +22,8 @@ public class AccountingHeadDashboard extends javax.swing.JFrame {
     /**
      * Creates new form AccountingHeadDashboard
      */
+    private javax.swing.Timer tokenMonitor;
+    
     public AccountingHeadDashboard() {
         initComponents();
         setLocationRelativeTo(null); // This centers the window
@@ -24,7 +31,22 @@ public class AccountingHeadDashboard extends javax.swing.JFrame {
         setSize(800, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        startTokenMonitor(); // Start the token watcher
     }
+    
+    // ✅ This method checks token expiration every minute
+private void startTokenMonitor() {
+    tokenMonitor = new javax.swing.Timer(60000, e -> {
+        String token = SessionManager.getToken();
+        if (token == null || !JWTUtil.validateToken(token)) {
+            JOptionPane.showMessageDialog(this, "Your session has expired. Please log in again.");
+            SessionManager.logout();
+            dispose(); // Close dashboard
+            new NewLoginUI().setVisible(true); // Return to login
+        }
+    });
+    tokenMonitor.start();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,6 +129,11 @@ public class AccountingHeadDashboard extends javax.swing.JFrame {
         ViewPayrollReportsButton.setMaximumSize(new java.awt.Dimension(200, 40));
         ViewPayrollReportsButton.setMinimumSize(new java.awt.Dimension(200, 40));
         ViewPayrollReportsButton.setPreferredSize(new java.awt.Dimension(200, 40));
+        ViewPayrollReportsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ViewPayrollReportsButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(ViewPayrollReportsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 200, 40));
 
         ApproveFinalReportsButton.setBackground(new java.awt.Color(255, 153, 0));
@@ -118,22 +145,52 @@ public class AccountingHeadDashboard extends javax.swing.JFrame {
         ApproveFinalReportsButton.setMaximumSize(new java.awt.Dimension(200, 40));
         ApproveFinalReportsButton.setMinimumSize(new java.awt.Dimension(200, 40));
         ApproveFinalReportsButton.setPreferredSize(new java.awt.Dimension(200, 40));
+        ApproveFinalReportsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApproveFinalReportsButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(ApproveFinalReportsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 200, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void AuditTrailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AuditTrailButtonActionPerformed
-new AuditTrailView().setVisible(true);
+    new AuditTrailView().setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_AuditTrailButtonActionPerformed
 
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
-     int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
-if (confirm == JOptionPane.YES_OPTION) {
-    this.dispose();
-    new NewLoginUI().setVisible(true); // go back to login page
-}
+    // Show confirmation dialog to the user
+    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Clear stored session information (username, role, token)
+        SessionManager.logout();
+
+        // Delete the saved token file if it exists
+        File tokenFile = new File("remember_token.dat");
+        if (tokenFile.exists()) {
+            tokenFile.delete(); // Remove saved JWT token used by 'Remember Me'
+        }
+
+        // Close the current dashboard window
+        this.dispose();
+
+        // Open the login screen again
+        new NewLoginUI().setVisible(true);
+    }
     }//GEN-LAST:event_LogoutButtonActionPerformed
+
+    private void ViewPayrollReportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewPayrollReportsButtonActionPerformed
+    new ViewPayrollReports().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_ViewPayrollReportsButtonActionPerformed
+
+    private void ApproveFinalReportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApproveFinalReportsButtonActionPerformed
+    new ApproveFinalReports().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_ApproveFinalReportsButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,4 +235,5 @@ if (confirm == JOptionPane.YES_OPTION) {
     private javax.swing.JButton ViewPayrollReportsButton;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
 }

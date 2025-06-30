@@ -5,10 +5,14 @@
 package gui;
 
 import auth.service.NewLoginUI;
+import java.io.File;
 import javax.swing.JOptionPane;
+import payrollmanager.view.ExportReportsView;
 import payrollmanager.view.GeneratePayslips;
 import payrollmanager.view.ProcessSalary;
 import payrollmanager.view.ViewPayrollRecords;
+import utils.JWTUtil;
+import utils.SessionManager;
 
 /**
  *
@@ -19,6 +23,8 @@ public class PayrollManagerDashboard extends javax.swing.JFrame {
     /**
      * Creates new form PayrollManagerDashboard
      */
+    private javax.swing.Timer tokenMonitor;
+    
     public PayrollManagerDashboard() {
         initComponents();
         setLocationRelativeTo(null); // This centers the window
@@ -26,8 +32,23 @@ public class PayrollManagerDashboard extends javax.swing.JFrame {
         setSize(850, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        startTokenMonitor(); //  Start the token watcher
     }
 
+ //  This method checks token expiration every minute
+private void startTokenMonitor() {
+    tokenMonitor = new javax.swing.Timer(60000, e -> {
+        String token = SessionManager.getToken();
+        if (token == null || !JWTUtil.validateToken(token)) {
+            JOptionPane.showMessageDialog(this, "Your session has expired. Please log in again.");
+            SessionManager.logout();
+            dispose(); // Close dashboard
+            new NewLoginUI().setVisible(true); // Return to login
+        }
+    });
+    tokenMonitor.start();
+}   
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -127,17 +148,36 @@ public class PayrollManagerDashboard extends javax.swing.JFrame {
         ExportReportsButton.setMaximumSize(new java.awt.Dimension(250, 40));
         ExportReportsButton.setMinimumSize(new java.awt.Dimension(250, 40));
         ExportReportsButton.setPreferredSize(new java.awt.Dimension(250, 40));
+        ExportReportsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExportReportsButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(ExportReportsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 250, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void GeneratePayslipsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeneratePayslipsButtonActionPerformed
+    // Show confirmation dialog to the user
     int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
-if (confirm == JOptionPane.YES_OPTION) {
-    this.dispose();
-    new NewLoginUI().setVisible(true); // go back to login page
-}
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Clear stored session information (username, role, token)
+        SessionManager.logout();
+
+        // Delete the saved token file if it exists
+        File tokenFile = new File("remember_token.dat");
+        if (tokenFile.exists()) {
+            tokenFile.delete(); // Remove saved JWT token used by 'Remember Me'
+        }
+
+        // Close the current dashboard window
+        this.dispose();
+
+        // Open the login screen again
+        new NewLoginUI().setVisible(true);
+    }
     }//GEN-LAST:event_GeneratePayslipsButtonActionPerformed
 
     private void ViewPayrollRecordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewPayrollRecordsButtonActionPerformed
@@ -154,6 +194,11 @@ if (confirm == JOptionPane.YES_OPTION) {
     new ProcessSalary().setVisible(true);
     this.dispose();
     }//GEN-LAST:event_ProcessSalaryButtonActionPerformed
+
+    private void ExportReportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExportReportsButtonActionPerformed
+    new ExportReportsView().setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_ExportReportsButtonActionPerformed
 
     /**
      * @param args the command line arguments
