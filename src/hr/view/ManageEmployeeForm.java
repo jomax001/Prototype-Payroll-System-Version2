@@ -4,18 +4,26 @@
  */
 package hr.view;
 
-import gui.NewHRDashboard;
+import gui.HRDashboard;
+import hr.view.EmployeeListForm;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import utils.DBConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jomax
  */
-public class NewManageEmployeeForm extends javax.swing.JFrame {
+public class ManageEmployeeForm extends javax.swing.JFrame {
 
     /**
      * Creates new form NewManageEmployeeForm
      */
-    public NewManageEmployeeForm() {
+    public ManageEmployeeForm() {
         initComponents();
         setLocationRelativeTo(null); // This centers the window
         setTitle("Manage Employee - FinMark Payroll System");
@@ -79,8 +87,10 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
         TINLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         SaveButton = new javax.swing.JButton();
-        DeleteButton = new javax.swing.JButton();
-        UpdateButton = new javax.swing.JButton();
+        DepartmentLabel = new javax.swing.JLabel();
+        DepartmentField = new javax.swing.JTextField();
+        EmailLabel = new javax.swing.JLabel();
+        EmailField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manage Employee");
@@ -107,7 +117,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
 
         FirstNameLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         FirstNameLabel1.setText("First Name");
-        getContentPane().add(FirstNameLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, 160, -1));
+        getContentPane().add(FirstNameLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 160, -1));
 
         PhilHealthLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         PhilHealthLabel.setText("PhilHealth #");
@@ -115,15 +125,15 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
 
         AddressLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         AddressLabel.setText("Address");
-        getContentPane().add(AddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 160, -1));
+        getContentPane().add(AddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 160, -1));
 
         PhoneNumberLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         PhoneNumberLabel.setText("Phone Number");
-        getContentPane().add(PhoneNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 160, -1));
+        getContentPane().add(PhoneNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, 160, -1));
 
         SSSLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         SSSLabel.setText("SSS #");
-        getContentPane().add(SSSLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 160, -1));
+        getContentPane().add(SSSLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 160, -1));
 
         PositionLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         PositionLabel.setText("Position");
@@ -166,7 +176,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
         addressField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jScrollPane1.setViewportView(addressField);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 180, 50));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, 550, 50));
 
         StatusComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         StatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regular", "Probationary" }));
@@ -176,7 +186,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 StatusComboBoxActionPerformed(evt);
             }
         });
-        getContentPane().add(StatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 280, 180, 30));
+        getContentPane().add(StatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 280, 180, 30));
 
         lastNameField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         lastNameField.addActionListener(new java.awt.event.ActionListener() {
@@ -200,7 +210,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 phoneFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(phoneField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 160, 180, -1));
+        getContentPane().add(phoneField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 120, 180, -1));
 
         firstNameField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         firstNameField.addActionListener(new java.awt.event.ActionListener() {
@@ -208,7 +218,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 firstNameFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(firstNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, 180, -1));
+        getContentPane().add(firstNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 180, -1));
 
         birthdayField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         birthdayField.addActionListener(new java.awt.event.ActionListener() {
@@ -272,7 +282,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 lastNameField5ActionPerformed(evt);
             }
         });
-        getContentPane().add(lastNameField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, 180, -1));
+        getContentPane().add(lastNameField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 180, -1));
 
         tinField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         tinField.addActionListener(new java.awt.event.ActionListener() {
@@ -280,7 +290,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 tinFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(tinField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 240, 180, -1));
+        getContentPane().add(tinField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 200, 180, -1));
 
         sssField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         sssField.addActionListener(new java.awt.event.ActionListener() {
@@ -288,7 +298,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 sssFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(sssField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 200, 180, -1));
+        getContentPane().add(sssField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 180, -1));
 
         lastNameField7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         lastNameField7.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +306,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 lastNameField7ActionPerformed(evt);
             }
         });
-        getContentPane().add(lastNameField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 200, 180, -1));
+        getContentPane().add(lastNameField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 180, -1));
 
         riceSubsidyField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         riceSubsidyField.addActionListener(new java.awt.event.ActionListener() {
@@ -304,7 +314,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 riceSubsidyFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(riceSubsidyField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 360, 180, -1));
+        getContentPane().add(riceSubsidyField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 360, 180, -1));
 
         supervisorField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         supervisorField.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +322,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 supervisorFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(supervisorField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 320, 180, -1));
+        getContentPane().add(supervisorField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, 180, -1));
 
         lastNameField9.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         lastNameField9.addActionListener(new java.awt.event.ActionListener() {
@@ -320,7 +330,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 lastNameField9ActionPerformed(evt);
             }
         });
-        getContentPane().add(lastNameField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 320, 180, -1));
+        getContentPane().add(lastNameField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, 180, -1));
 
         hourlyRateField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         hourlyRateField.addActionListener(new java.awt.event.ActionListener() {
@@ -328,7 +338,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 hourlyRateFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(hourlyRateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 440, 180, -1));
+        getContentPane().add(hourlyRateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 440, 180, -1));
 
         clothingAllowanceField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         clothingAllowanceField.addActionListener(new java.awt.event.ActionListener() {
@@ -336,7 +346,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 clothingAllowanceFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(clothingAllowanceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, 180, -1));
+        getContentPane().add(clothingAllowanceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, 180, -1));
 
         lastNameField11.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         lastNameField11.addActionListener(new java.awt.event.ActionListener() {
@@ -344,7 +354,7 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 lastNameField11ActionPerformed(evt);
             }
         });
-        getContentPane().add(lastNameField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, 180, -1));
+        getContentPane().add(lastNameField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, 180, -1));
 
         PagibigLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         PagibigLabel1.setText("Pag-ibig #");
@@ -352,42 +362,61 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
 
         TINLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TINLabel.setText("TIN #");
-        getContentPane().add(TINLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 160, -1));
+        getContentPane().add(TINLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 160, -1));
 
         jButton1.setBackground(new java.awt.Color(128, 128, 128));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Cancel");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.setMaximumSize(new java.awt.Dimension(125, 40));
+        jButton1.setMinimumSize(new java.awt.Dimension(125, 40));
+        jButton1.setPreferredSize(new java.awt.Dimension(125, 40));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 500, 100, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 520, 125, 40));
 
         SaveButton.setBackground(new java.awt.Color(59, 115, 185));
         SaveButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         SaveButton.setForeground(new java.awt.Color(255, 255, 255));
         SaveButton.setText("Save");
         SaveButton.setToolTipText("");
+        SaveButton.setMaximumSize(new java.awt.Dimension(120, 40));
+        SaveButton.setMinimumSize(new java.awt.Dimension(120, 40));
+        SaveButton.setPreferredSize(new java.awt.Dimension(120, 40));
         SaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(SaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 500, 100, -1));
+        getContentPane().add(SaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 520, 120, 40));
 
-        DeleteButton.setBackground(new java.awt.Color(255, 0, 0));
-        DeleteButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        DeleteButton.setForeground(new java.awt.Color(255, 255, 255));
-        DeleteButton.setText("Delete");
-        getContentPane().add(DeleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 500, 100, -1));
+        DepartmentLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        DepartmentLabel.setText("Department");
+        getContentPane().add(DepartmentLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 480, 160, -1));
 
-        UpdateButton.setBackground(new java.awt.Color(0, 100, 0));
-        UpdateButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        UpdateButton.setForeground(new java.awt.Color(255, 255, 255));
-        UpdateButton.setText("Update");
-        getContentPane().add(UpdateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 500, 100, -1));
+        DepartmentField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        DepartmentField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DepartmentFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(DepartmentField, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 480, 180, -1));
+
+        EmailLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        EmailLabel.setText("Email");
+        getContentPane().add(EmailLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 480, 160, -1));
+
+        EmailField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        EmailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(EmailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 480, 180, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -481,13 +510,70 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_lastNameField11ActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        // TODO add your handling code here:
+try {
+        Connection con = DBConnection.getConnection();
+        String sql = "INSERT INTO employees (id, last_name, position, department, email, birthday, address, phone_number, philhealth, sss, tin, pagibig, status, supervisor, basic_salary, phone_allowance, rice_subsidy, clothing_allowance, gross_semi_monthly, hourly_rate, first_name) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setString(1, employeeNumberField.getText());            // id
+        pst.setString(2, lastNameField.getText());                  // last_name
+        pst.setString(3, positionField.getText());                  // position
+        pst.setString(4, DepartmentField.getText());                // department
+        pst.setString(5, EmailField.getText());                     // email
+        
+                // Birthday parsing
+        try {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedDate = format.parse(birthdayField.getText());
+            java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+            pst.setDate(6, sqlDate); // birthday
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Invalid birthday format (yyyy-MM-dd)");
+            return;
+        }
+        
+        pst.setString(7, addressField.getText());                   // address
+        pst.setString(8, phoneField.getText());                     // phone_number
+        pst.setString(9, philhealthField.getText());                // philhealth
+        pst.setString(10, sssField.getText());                      // sss
+        pst.setString(11, tinField.getText());                      // tin
+        pst.setString(12, pagibigField.getText());                  // pagibig
+        pst.setString(13, StatusComboBox.getSelectedItem().toString()); // status
+        pst.setString(14, supervisorField.getText());               // supervisor
+        pst.setDouble(15, Double.parseDouble(basicSalaryField.getText()));       // basic_salary
+        pst.setDouble(16, Double.parseDouble(phoneAllowanceField.getText()));    // phone_allowance
+        pst.setDouble(17, Double.parseDouble(riceSubsidyField.getText()));       // rice_subsidy
+        pst.setDouble(18, Double.parseDouble(clothingAllowanceField.getText())); // clothing_allowance
+        pst.setDouble(19, Double.parseDouble(grossRateField.getText()));     // gross_semi_monthly
+        pst.setDouble(20, Double.parseDouble(hourlyRateField.getText()));        // hourly_rate
+        pst.setString(21, firstNameField.getText());                             // first_name
+
+        pst.executeUpdate();
+        con.close();
+
+        JOptionPane.showMessageDialog(this, "Employee added successfully!");
+        new EmployeeListForm().setVisible(true);
+        this.dispose();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
    this.dispose(); // Close the form
-   new NewHRDashboard().setVisible(true); // go back to HR Dashboard page
+   new HRDashboard().setVisible(true); // go back to HR Dashboard page
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void DepartmentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepartmentFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DepartmentFieldActionPerformed
+
+    private void EmailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -506,20 +592,21 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewManageEmployeeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageEmployeeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewManageEmployeeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageEmployeeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewManageEmployeeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageEmployeeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewManageEmployeeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageEmployeeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewManageEmployeeForm().setVisible(true);
+                new ManageEmployeeForm().setVisible(true);
             }
         });
     }
@@ -529,7 +616,10 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
     private javax.swing.JLabel BasicSalaryLabel;
     private javax.swing.JLabel BirthdayLabel;
     private javax.swing.JLabel ClothingAllowanceLabel;
-    private javax.swing.JButton DeleteButton;
+    private javax.swing.JTextField DepartmentField;
+    private javax.swing.JLabel DepartmentLabel;
+    private javax.swing.JTextField EmailField;
+    private javax.swing.JLabel EmailLabel;
     private javax.swing.JLabel EmployeeNumberLabel1;
     private javax.swing.JLabel FirstNameLabel1;
     private javax.swing.JLabel GrossSemimonthlyLabel;
@@ -548,7 +638,6 @@ public class NewManageEmployeeForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> StatusComboBox;
     private javax.swing.JLabel StatusLabel;
     private javax.swing.JLabel TINLabel;
-    private javax.swing.JButton UpdateButton;
     private javax.swing.JTextArea addressField;
     private javax.swing.JTextField basicSalaryField;
     private javax.swing.JTextField birthdayField;

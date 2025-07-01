@@ -7,42 +7,47 @@ import java.security.Key;
 import java.util.Date;
 
 public class JWTUtil {
-    // Secret key used to sign and verify JWT tokens using the HS256 algorithm.
+    // ✅ Secret key used to sign and verify JWT tokens using the HS256 algorithm
     private static final Key key = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS256);
 
-    // Token expiration time set to 20 minutes (in milliseconds).
-    private static final long EXPIRATION_TIME = 1000 * 60 * 20;
+    // ✅ Token expiration time set to 10 minutes (in milliseconds)
+    private static final long EXPIRATION_TIME = 1000 * 60 * 10;
 
-    // Generates a JWT token with username and expiration time
+    // ✅ This method generates a JWT token with the given username and expiration
     public static String generateToken(String username) {
-        return Jwts.builder()
-                .setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(key)
+        String token = Jwts.builder()
+                .setSubject(username) // Set username as token subject
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // 10 mins expiry
+                .signWith(key) // Sign the token with secret key
                 .compact();
+
+        System.out.println("✅ JWT token generated for: " + username); // Print for debugging
+        System.out.println("🔐 Token: " + token);
+        return token;
     }
 
-    // Validates the token's signature and expiration
+    // ✅ This method checks if the token is valid (signature and expiration)
     public static boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(key)
+                    .setSigningKey(key) // Use same secret key
                     .build()
-                    .parseClaimsJws(token);
-            return true;
+                    .parseClaimsJws(token); // Parse token to verify
+            return true; // Valid token
         } catch (JwtException e) {
-            System.out.println("Invalid token: " + e.getMessage());
+            // If expired or invalid signature
+            System.out.println("❌ Invalid or expired token: " + e.getMessage());
             return false;
         }
     }
 
-    // Gets the username stored inside the token
+    // ✅ This method extracts the username from the token
     public static String getUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .getSubject();
+                .getSubject(); // Returns the username
     }
 }

@@ -5,7 +5,7 @@
 package employee.view;
 
 import gui.EmployeeDashboard;
-import gui.NewHRDashboard;
+import gui.HRDashboard;
 
 /**
  *

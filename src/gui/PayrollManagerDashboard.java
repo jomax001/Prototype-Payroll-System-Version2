@@ -4,7 +4,8 @@
  */
 package gui;
 
-import auth.service.NewLoginUI;
+import auth.service.LoginController;
+import auth.service.LoginUI;
 import java.io.File;
 import javax.swing.JOptionPane;
 import payrollmanager.view.ExportReportsView;
@@ -35,15 +36,17 @@ public class PayrollManagerDashboard extends javax.swing.JFrame {
         startTokenMonitor(); //  Start the token watcher
     }
 
- //  This method checks token expiration every minute
+ //  This method checks token expiration every 10 minutes
 private void startTokenMonitor() {
-    tokenMonitor = new javax.swing.Timer(60000, e -> {
+    // Timer set to run every 10 minutes (600,000 milliseconds)
+    // This code inside will execute once every 10 minutes
+    tokenMonitor = new javax.swing.Timer(600000, e -> {
         String token = SessionManager.getToken();
         if (token == null || !JWTUtil.validateToken(token)) {
             JOptionPane.showMessageDialog(this, "Your session has expired. Please log in again.");
             SessionManager.logout();
             dispose(); // Close dashboard
-            new NewLoginUI().setVisible(true); // Return to login
+            new LoginUI().setVisible(true); // Return to login
         }
     });
     tokenMonitor.start();
@@ -60,7 +63,7 @@ private void startTokenMonitor() {
 
         jPanel1 = new javax.swing.JPanel();
         PayrollManagerDashboardLabel = new javax.swing.JLabel();
-        GeneratePayslipsButton = new javax.swing.JButton();
+        LogoutButton = new javax.swing.JButton();
         ViewPayrollRecordsButton = new javax.swing.JButton();
         GeneratePayslipsButton1 = new javax.swing.JButton();
         ProcessSalaryButton = new javax.swing.JButton();
@@ -83,19 +86,19 @@ private void startTokenMonitor() {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 80));
 
-        GeneratePayslipsButton.setBackground(new java.awt.Color(220, 20, 60));
-        GeneratePayslipsButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        GeneratePayslipsButton.setForeground(new java.awt.Color(255, 255, 255));
-        GeneratePayslipsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/logout.png"))); // NOI18N
-        GeneratePayslipsButton.setText("Logout");
-        GeneratePayslipsButton.setToolTipText("Generate Payslips");
-        GeneratePayslipsButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        GeneratePayslipsButton.addActionListener(new java.awt.event.ActionListener() {
+        LogoutButton.setBackground(new java.awt.Color(220, 20, 60));
+        LogoutButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LogoutButton.setForeground(new java.awt.Color(255, 255, 255));
+        LogoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/logout.png"))); // NOI18N
+        LogoutButton.setText("Logout");
+        LogoutButton.setToolTipText("Generate Payslips");
+        LogoutButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        LogoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GeneratePayslipsButtonActionPerformed(evt);
+                LogoutButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(GeneratePayslipsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, 120, 35));
+        getContentPane().add(LogoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, 120, 35));
 
         ViewPayrollRecordsButton.setBackground(new java.awt.Color(70, 130, 180));
         ViewPayrollRecordsButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -158,27 +161,36 @@ private void startTokenMonitor() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void GeneratePayslipsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeneratePayslipsButtonActionPerformed
-    // Show confirmation dialog to the user
+    private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
+ // Ask the user to confirm logout
     int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
 
     if (confirm == JOptionPane.YES_OPTION) {
-        // Clear stored session information (username, role, token)
-        SessionManager.logout();
+        // ✅ 1. Get the currently logged-in username
+        String username = SessionManager.getUsername();
 
-        // Delete the saved token file if it exists
+        // ✅ 2. Clear the session in the database (prevent multi-login)
+        LoginController.clearSession(username);
+
+        // ✅ 3. Clear session in memory (username, role, token)
+        SessionManager.logout();
+        
+        // ✅ 4. Delete token in the database (so user won't be auto-logged in again)
+        utils.RememberTokenUtil.deleteToken(username);
+
+        // ✅ 5. Delete the saved token file (Remember Me feature)
         File tokenFile = new File("remember_token.dat");
         if (tokenFile.exists()) {
-            tokenFile.delete(); // Remove saved JWT token used by 'Remember Me'
+            tokenFile.delete();
         }
 
-        // Close the current dashboard window
+        // ✅ 6. Close current window (this dashboard)
         this.dispose();
 
-        // Open the login screen again
-        new NewLoginUI().setVisible(true);
+        // ✅ 7. Show login screen again
+        new LoginUI().setVisible(true);
     }
-    }//GEN-LAST:event_GeneratePayslipsButtonActionPerformed
+    }//GEN-LAST:event_LogoutButtonActionPerformed
 
     private void ViewPayrollRecordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewPayrollRecordsButtonActionPerformed
     new ViewPayrollRecords().setVisible(true);
@@ -237,8 +249,8 @@ private void startTokenMonitor() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ExportReportsButton;
-    private javax.swing.JButton GeneratePayslipsButton;
     private javax.swing.JButton GeneratePayslipsButton1;
+    private javax.swing.JButton LogoutButton;
     private javax.swing.JLabel PayrollManagerDashboardLabel;
     private javax.swing.JButton ProcessSalaryButton;
     private javax.swing.JButton ViewPayrollRecordsButton;

@@ -4,31 +4,32 @@
  */
 package gui;
 
-import auth.service.NewLoginUI;
+import auth.service.LoginController;
+import auth.service.LoginUI;
 import hr.view.HRPayslipView;
-import hr.view.NewEmployeeListForm;
-import hr.view.NewManageEmployeeForm;
+import hr.view.EmployeeListForm;
+import hr.view.ManageEmployeeForm;
 import java.io.File;
-import javax.swing.JOptionPane;
 import leave.service.NewLeaveRequest;
 import utils.JWTUtil;
 import utils.SessionManager;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jomax
  */
-public class NewHRDashboard extends javax.swing.JFrame {
+public class HRDashboard extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewHRDashboard
+     * Creates new form HRDashboard
      */
  private javax.swing.Timer tokenMonitor;   
     
-    public NewHRDashboard() {
+    public HRDashboard() {
         initComponents();
         setTitle("HR Dashboard - FinMark Payroll System");
-        setSize(400, 350);
+        setSize(550, 520);
         setLocationRelativeTo(null); // This centers the window
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -38,19 +39,21 @@ public class NewHRDashboard extends javax.swing.JFrame {
     // ONE MAIN METHOD ONLY
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            new NewHRDashboard().setVisible(true);
+            new HRDashboard().setVisible(true);
         });
     }
     
-    //  This method checks token expiration every minute
+    //  This method checks token expiration every 10 minutes
 private void startTokenMonitor() {
-    tokenMonitor = new javax.swing.Timer(60000, e -> {
+    // Timer set to run every 10 minutes (600,000 milliseconds)
+    // This code inside will execute once every 10 minutes
+    tokenMonitor = new javax.swing.Timer(600000, e -> {
         String token = SessionManager.getToken();
         if (token == null || !JWTUtil.validateToken(token)) {
             JOptionPane.showMessageDialog(this, "Your session has expired. Please log in again.");
             SessionManager.logout();
             dispose(); // Close dashboard
-            new NewLoginUI().setVisible(true); // Return to login
+            new LoginUI().setVisible(true); // Return to login
         }
     });
     tokenMonitor.start();
@@ -77,46 +80,26 @@ private void startTokenMonitor() {
         payslipButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(555, 450));
+        setMinimumSize(new java.awt.Dimension(550, 520));
+        setPreferredSize(new java.awt.Dimension(550, 520));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(59, 115, 185));
         jPanel1.setMinimumSize(new java.awt.Dimension(150, 1000));
         jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         HRlabel.setFont(new java.awt.Font("Impact", 1, 40)); // NOI18N
         HRlabel.setForeground(new java.awt.Color(255, 255, 255));
         HRlabel.setText("HR");
+        jPanel1.add(HRlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
 
         Dashboardlabel.setFont(new java.awt.Font("Impact", 1, 26)); // NOI18N
         Dashboardlabel.setForeground(new java.awt.Color(255, 255, 255));
         Dashboardlabel.setText("DASHBOARD");
+        jPanel1.add(Dashboardlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Dashboardlabel))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(HRlabel)))
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(HRlabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Dashboardlabel)
-                .addContainerGap(893, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 520));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 520));
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         titleLabel.setText("Welcome, HR Personnel");
@@ -187,34 +170,43 @@ private void startTokenMonitor() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-    // Show confirmation dialog to the user
+ // Ask the user to confirm logout
     int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
 
     if (confirm == JOptionPane.YES_OPTION) {
-        // Clear stored session information (username, role, token)
-        SessionManager.logout();
+        // ✅ 1. Get the currently logged-in username
+        String username = SessionManager.getUsername();
 
-        // Delete the saved token file if it exists
+        // ✅ 2. Clear the session in the database (prevent multi-login)
+        LoginController.clearSession(username);
+
+        // ✅ 3. Clear session in memory (username, role, token)
+        SessionManager.logout();
+        
+        // ✅ 4. Delete token in the database (so user won't be auto-logged in again)
+        utils.RememberTokenUtil.deleteToken(username);
+
+        // ✅ 5. Delete the saved token file (Remember Me feature)
         File tokenFile = new File("remember_token.dat");
         if (tokenFile.exists()) {
-            tokenFile.delete(); // Remove saved JWT token used by 'Remember Me'
+            tokenFile.delete();
         }
 
-        // Close the current dashboard window
+        // ✅ 6. Close current window (this dashboard)
         this.dispose();
 
-        // Open the login screen again
-        new NewLoginUI().setVisible(true);
+        // ✅ 7. Show login screen again
+        new LoginUI().setVisible(true);
     }
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void viewEmployeesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewEmployeesButtonActionPerformed
-    new NewEmployeeListForm().setVisible(true);
-    this.dispose();
+    new EmployeeListForm().setVisible(true);
+    this.dispose(); // optional: closes HRDashboard window
     }//GEN-LAST:event_viewEmployeesButtonActionPerformed
 
     private void manageEmployeesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEmployeesButtonActionPerformed
-    new NewManageEmployeeForm().setVisible(true);
+    new ManageEmployeeForm().setVisible(true);
     this.dispose();
     }//GEN-LAST:event_manageEmployeesButtonActionPerformed
 

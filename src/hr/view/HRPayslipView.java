@@ -4,7 +4,7 @@
  */
 package hr.view;
 
-import gui.NewHRDashboard;
+import gui.HRDashboard;
 
 /**
  *
@@ -179,7 +179,7 @@ public class HRPayslipView extends javax.swing.JFrame {
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
    this.dispose(); // Close the form
-   new NewHRDashboard().setVisible(true); // go back to HR Dashboard page
+   new HRDashboard().setVisible(true); // go back to HR Dashboard page
     }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**

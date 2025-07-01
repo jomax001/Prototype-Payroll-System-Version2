@@ -1,5 +1,6 @@
 package auth.service;
 
+import auth.service.LoginController;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -8,7 +9,7 @@ import java.io.*;
 import gui.AccountingHeadDashboard;
 import gui.AdminDashboard;
 import gui.EmployeeDashboard;
-import gui.NewHRDashboard;
+import gui.HRDashboard;
 import gui.PayrollManagerDashboard;
 import gui.TeamLeaderDashboard;
 import utils.DBConnection;
@@ -25,13 +26,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.time.Instant;
+import utils.EmailUtil;
+import utils.OTPUtil;
+import utils.RememberTokenUtil;
 
 /**
  *
  * @author Jomax
  */
-public class NewLoginUI extends javax.swing.JFrame {
-
+public class LoginUI extends javax.swing.JFrame {
+    
     // Placeholder and password visibility flags
     private final String passwordPlaceholder = "Enter password";
     private boolean showingPasswordPlaceholder = true;
@@ -43,13 +48,23 @@ public class NewLoginUI extends javax.swing.JFrame {
     /**
      * Creates new form NewLoginUI
      */
-    public NewLoginUI() {
+    public LoginUI() {
         initComponents();
         setLocationRelativeTo(null); // This centers the window
         setTitle("Login - FinMark Payroll System");
         setSize(400, 350);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+
+        
+        // Check if DB is connected
+    if (LoginController.isDatabaseConnected()) {
+        lblDBStatus.setText("✅ Connected to Database");
+        lblDBStatus.setForeground(Color.GREEN.darker());
+    } else {
+        lblDBStatus.setText("❌ DB Connection Failed");
+        lblDBStatus.setForeground(Color.RED);
+    } 
         
          // Hide "Remember Me" checkbox for Administrator role
         String selectedRole = roleComboBox.getSelectedItem().toString();
@@ -118,22 +133,54 @@ public class NewLoginUI extends javax.swing.JFrame {
         });
         timer.start();
         
-        // Auto-login from encrypted token
-        if (Files.exists(Paths.get(TOKEN_FILE))) {
-            try {
-                byte[] encrypted = Files.readAllBytes(Paths.get(TOKEN_FILE));
-                String token = decryptToken(encrypted);
-                if (JWTUtil.validateToken(token)) {
-                    String username = JWTUtil.getUsername(token);
-                    String role = getUserRoleFromDatabase(username);
-                    SessionManager.setSession(username, role, token);
-                    openDashboard(role);
-                    dispose();
-                }
-            } catch (Exception ignored) {}
-        }
-        System.out.println("Java time now: " + java.time.ZonedDateTime.now()); 
+// [AUTO-LOGIN LOGIC] This checks if a saved token exists for "Remember Me"
+if (Files.exists(Paths.get(TOKEN_FILE))) {
+    System.out.println(" Token file found, attempting auto-login...");
 
+    try {
+        // Read the encrypted token from the file
+        byte[] encrypted = Files.readAllBytes(Paths.get(TOKEN_FILE));
+
+        // Decrypt the token using AES
+        String token = decryptToken(encrypted);
+        System.out.println("🔓 Decrypted token: " + token);
+
+        // Validate the JWT token's signature and expiration
+        if (JWTUtil.validateToken(token)) {
+            // Extract username from the token
+            String username = JWTUtil.getUsername(token);
+
+            // Get the corresponding role from the database
+            String role = getUserRoleFromDatabase(username);
+
+            // Store the session details in memory
+            SessionManager.setSession(username, role, token);
+
+            // Open the user’s dashboard based on their role
+            openDashboard(role);
+
+            // Close the login window since we auto-logged in
+            dispose();
+
+            return; // Exit constructor
+        } else {
+            System.out.println("❌ Token invalid or expired. Auto-login cancelled.");
+
+            //  Optional: Show a message to the user
+            JOptionPane.showMessageDialog(this, "Auto-login token has expired. Please log in manually.");
+        }
+    } catch (Exception e) {
+        // Catch-all: Log errors if something fails
+        System.out.println("⚠️ Error during auto-login:");
+        e.printStackTrace();
+    }
+} else {
+    System.out.println(" 📁 No token file found. Skipping auto-login.");
+}
+
+
+// For debug purposes: print current system time
+System.out.println("🕒 Java time now: " + java.time.ZonedDateTime.now());
     }
     
      // Add placeholder for username input field
@@ -207,6 +254,7 @@ public class NewLoginUI extends javax.swing.JFrame {
         passwordField = new javax.swing.JPasswordField();
         togglePasswordBtn = new javax.swing.JButton();
         rememberMeCheckbox = new javax.swing.JCheckBox();
+        lblDBStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login Dashboard");
@@ -254,7 +302,7 @@ public class NewLoginUI extends javax.swing.JFrame {
         companyLabel.setMaximumSize(new java.awt.Dimension(240, 20));
         companyLabel.setMinimumSize(new java.awt.Dimension(240, 20));
         companyLabel.setPreferredSize(new java.awt.Dimension(240, 20));
-        getContentPane().add(companyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 240, 20));
+        getContentPane().add(companyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 240, 20));
 
         passwordField.setText("jPasswordField1");
         passwordField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -275,6 +323,12 @@ public class NewLoginUI extends javax.swing.JFrame {
         rememberMeCheckbox.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         getContentPane().add(rememberMeCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
 
+        lblDBStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDBStatus.setMaximumSize(new java.awt.Dimension(250, 20));
+        lblDBStatus.setMinimumSize(new java.awt.Dimension(250, 20));
+        lblDBStatus.setPreferredSize(new java.awt.Dimension(250, 20));
+        getContentPane().add(lblDBStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 250, 20));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -294,61 +348,123 @@ public class NewLoginUI extends javax.swing.JFrame {
     }//GEN-LAST:event_togglePasswordBtnActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
- // This runs when I press the login button
-
-    // Get the values entered by the user
+    // Step 1: Get input values
     String username = usernameField.getText();
     String password = new String(passwordField.getPassword());
     String role = roleComboBox.getSelectedItem().toString();
-    
-    // Force user to check Remember Me if not Administrator
+
+    // Step 2: Enforce "Remember Me" for non-Admins
     if (!role.equals("Administrator") && !rememberMeCheckbox.isSelected()) {
         JOptionPane.showMessageDialog(this, "You must check 'Remember Me' to continue.");
-        return; // Cancel login if checkbox is not selected
+        return;
     }
 
-    // Call the login function from LoginController and get the result (success, locked, invalid, etc.)
-    String result = LoginController.login(username, password, role);
+            // Step 3: Authenticate login
+            String result = LoginController.login(username, password, role);
 
-    // Check the result from login attempt
-    switch (result) {
-        case "success":
-            // If login is successful, show success message
-            JOptionPane.showMessageDialog(this, "Login successful!");
+            switch (result) {
+            case "success":
 
-            // If the user checked "Remember Me", I will save the token to a file
-            if (rememberMeCheckbox.isSelected()) {
-                try (FileOutputStream fos = new FileOutputStream(TOKEN_FILE)) {
-                    String token = SessionManager.getToken();      // Get the token after login
-                    byte[] encrypted = encryptToken(token);        // Encrypt the token for security
-                    fos.write(encrypted);                          // Save the encrypted token to file
+            // Step 4: Generate OTP
+            String otp = OTPUtil.generateOtp();
+            String recipientEmail = OTPUtil.getUserEmailFromDatabase(username);
+
+            if (recipientEmail != null) {
+                Timestamp expiresAt = Timestamp.from(Instant.now().plusSeconds(300)); // expires in 5 minutes
+                
+                // ✅ Save OTP to database
+                OTPUtil.saveOtpToDatabase(username, otp, expiresAt, 3); // 3 attempts allowed
+                
+                // ✅ Debug output
+                System.out.println("Sending OTP to: " + recipientEmail);
+                System.out.println("Generated OTP: " + otp);
+
+                // ✅ Send the OTP via email
+                EmailUtil.sendOtpCode(recipientEmail, otp);
+                
+                // Ask user to enter the OTP
+                String enteredOtp = JOptionPane.showInputDialog(this, "Enter the OTP sent to your email:");
+
+                // Get OTP from DB for comparison
+                String dbOtp = null;
+                Timestamp expirationTimeFromDB = null;
+                try (Connection conn = DBConnection.getConnection()) {
+                    String sql = "SELECT otp_code, expiration_time FROM otp_codes WHERE username = ?";
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ps.setString(1, username);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        dbOtp = rs.getString("otp_code");
+                        expirationTimeFromDB = rs.getTimestamp("expiration_time");
+                        
+                                            }
                 } catch (Exception e) {
-                    e.printStackTrace(); // Show error if token saving fails
+                    e.printStackTrace();
                 }
-            }
+                
+                Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+                System.out.println("User entered OTP: " + enteredOtp);
+                System.out.println("OTP from DB: " + dbOtp);
+                System.out.println("Current time: " + currentTime);
+                System.out.println("OTP expiration time: " + expirationTimeFromDB);
+                
+                // Check if OTP is valid
+                if (enteredOtp != null && enteredOtp.equals(dbOtp)) {
+                    if (currentTime.after(expirationTimeFromDB)) {
+                        JOptionPane.showMessageDialog(this, "OTP has expired. Please try again.");
+                        return;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid or expired OTP. Login cancelled.");
+                    return;
+                }
 
-            // Open the dashboard that matches the user's role
+            } else {
+                JOptionPane.showMessageDialog(this, "Email not found. Cannot send OTP.");
+                return;
+            }
+            
+            JOptionPane.showMessageDialog(this, "Login successful!");
+                
+            // ✅ Save session now
+            LoginController.saveSession(username, SessionManager.getToken()); 
+
+            // ✅ Step 5: Save token in the database if "Remember Me" is checked
+            if (rememberMeCheckbox.isSelected()) {
+    
+             // ✅ Get the generated JWT token from the SessionManager
+            String token = SessionManager.getToken();
+    
+             // ✅ Set the token expiration time to 7 days from now
+                Timestamp expiresAt = Timestamp.from(Instant.now().plusSeconds(7 * 24 * 60 * 60)); // 7 days
+
+            // ✅ Save the token in the database table (e.g., remember_tokens) linked to the username
+            RememberTokenUtil.saveToken(username, token, expiresAt);
+                }
+
+            // Step 6: Open dashboard
             openDashboard(role);
-            this.dispose(); // Close the login form
+            this.dispose();
             break;
 
         case "locked":
-            // If the account is locked, inform the user
             JOptionPane.showMessageDialog(this, "Your account is locked. Try again later.");
             break;
 
         case "invalid":
-            // If the password is wrong, notify the user
             JOptionPane.showMessageDialog(this, "Invalid credentials. Please try again.");
             break;
 
         case "not_found":
-            // If the username was not found, show this
             JOptionPane.showMessageDialog(this, "User not found.");
             break;
+            
+        // System will check if User has active session    
+        case "active_session":
+            JOptionPane.showMessageDialog(this, "You are already logged in on another device.");
+            return;
 
         default:
-            // In case something else goes wrong, this is the fallback message
             JOptionPane.showMessageDialog(this, "An error occurred. Please try again later.");
             break;
     }
@@ -358,7 +474,7 @@ public class NewLoginUI extends javax.swing.JFrame {
  private void openDashboard(String role) {
         switch (role) {
             case "HR Personnel":
-                new NewHRDashboard().setVisible(true);
+                new HRDashboard().setVisible(true);
                 break;
             case "Team Leader":
                 new TeamLeaderDashboard().setVisible(true);
@@ -381,8 +497,6 @@ public class NewLoginUI extends javax.swing.JFrame {
                    
         }
 }
-
-
     // Get user role from database based on username
     private String getUserRoleFromDatabase(String username) {
         try (Connection conn = DBConnection.getConnection()) {
@@ -422,13 +536,14 @@ public class NewLoginUI extends javax.swing.JFrame {
         // Launch the login UI
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewLoginUI().setVisible(true);
+                new LoginUI().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel companyLabel;
+    private javax.swing.JLabel lblDBStatus;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel loginLabel;
     private javax.swing.JPasswordField passwordField;
@@ -438,3 +553,5 @@ public class NewLoginUI extends javax.swing.JFrame {
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }
+
+

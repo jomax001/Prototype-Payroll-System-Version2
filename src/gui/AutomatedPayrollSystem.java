@@ -1,6 +1,6 @@
 package gui;
 
-import auth.service.NewLoginUI;
+import auth.service.LoginUI;
 
 /**
  *
@@ -14,7 +14,7 @@ public class AutomatedPayrollSystem {
     public static void main(String args[]) {
     java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-            new NewLoginUI().setVisible(true);
+            new LoginUI().setVisible(true);
         }
     });
 }

@@ -8,7 +8,8 @@ import admin.view.UnlockUserForm;
 import admin.view.ViewAllUsersForm;
 import admin.view.ViewLockedUsersForm;
 import admin.view.ViewSystemLogsForm;
-import auth.service.NewLoginUI;
+import auth.service.LoginController;
+import auth.service.LoginUI;
 import java.io.File;
 import javax.swing.JOptionPane;
 import utils.JWTUtil;
@@ -35,15 +36,17 @@ public class AdminDashboard extends javax.swing.JFrame {
         startTokenMonitor(); // Start the token watcher
     }
     
-    // This method checks token expiration every minute
+    // This method checks token expiration every 10 minutes
 private void startTokenMonitor() {
-    tokenMonitor = new javax.swing.Timer(60000, e -> {
+    // Timer set to run every 10 minutes (600,000 milliseconds)
+    // This code inside will execute once every 10 minutes
+    tokenMonitor = new javax.swing.Timer(600000, e -> { 
         String token = SessionManager.getToken();
         if (token == null || !JWTUtil.validateToken(token)) {
             JOptionPane.showMessageDialog(this, "Your session has expired. Please log in again.");
             SessionManager.logout();
             dispose(); // Close dashboard
-            new NewLoginUI().setVisible(true); // Return to login
+            new LoginUI().setVisible(true); // Return to login
         }
     });
     tokenMonitor.start();
@@ -173,22 +176,33 @@ private void startTokenMonitor() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
-    // Ask user if they are sure they want to logout
+  // Ask the user to confirm logout
     int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
-    
-    if (confirm == JOptionPane.YES_OPTION) {
-        // Clear session data (username, role, token)
-        SessionManager.logout();
 
-        // Delete the saved token file if it exists
+    if (confirm == JOptionPane.YES_OPTION) {
+        // ✅ 1. Get the currently logged-in username
+        String username = SessionManager.getUsername();
+
+        // ✅ 2. Clear the session in the database (prevent multi-login)
+        LoginController.clearSession(username);
+
+        // ✅ 3. Clear session in memory (username, role, token)
+        SessionManager.logout();
+        
+        // ✅ 4. Delete token in the database (so user won't be auto-logged in again)
+        utils.RememberTokenUtil.deleteToken(username);
+
+        // ✅ 5. Delete the saved token file (Remember Me feature)
         File tokenFile = new File("remember_token.dat");
         if (tokenFile.exists()) {
-            tokenFile.delete(); // remove token from local storage
+            tokenFile.delete();
         }
 
-        // Close this window and go back to login screen
+        // ✅ 6. Close current window (this dashboard)
         this.dispose();
-        new NewLoginUI().setVisible(true);
+
+        // ✅ 7. Show login screen again
+        new LoginUI().setVisible(true);
     }
     }//GEN-LAST:event_LogoutButtonActionPerformed
 
