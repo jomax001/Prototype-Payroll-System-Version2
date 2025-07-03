@@ -6,7 +6,7 @@ import java.util.Properties;     // For reading key=value pairs from .properties
 public class ConfigManager {
 
     // This variable will be true if we want to use CSV instead of SQL
-    private static boolean useCsv = false;
+    private static boolean useCsv = true;
 
     // This block runs once when the class is first loaded
     static {

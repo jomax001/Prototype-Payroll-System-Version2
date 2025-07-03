@@ -8,9 +8,11 @@ package utils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp; 
+import java.util.List;
+import java.sql.Timestamp;
 import java.util.Random;
 
+import utils.CSVUtil;
 /**
  *
  * @author Jomax
@@ -128,6 +130,41 @@ public static void storeOtpInDatabase(String username, String otp, Timestamp exp
         e.printStackTrace();
     }
 }
+
+// ✅ Use this if you want to extract user email from users.csv
+public static String getUserEmailFromCSV(String username) {
+    // Read all rows from users.csv file
+    List<String[]> rows = CSVUtil.readCSV("data/users.csv");
+
+    // Loop through each row (skip header)
+    for (int i = 1; i < rows.size(); i++) {
+        String[] row = rows.get(i); // Get one user's row
+
+        // Check if username matches
+        if (row[0].equalsIgnoreCase(username)) {
+            if (row.length > 22) { // Make sure email column exists
+                System.out.println("✅ Found email: " + row[22]); // For debugging
+                return row[22].trim(); // Return the found email
+            } else {
+                System.out.println("⚠️ Email column missing for user: " + username);
+                return null;
+            }
+        }
+    }
+
+    // Username not found
+    System.out.println("❌ Username not found in CSV: " + username);
+    return null;
+}
+
+
+    public static String generateOtpCode() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public static String getExpiryTime(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 
 }

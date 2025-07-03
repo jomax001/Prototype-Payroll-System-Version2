@@ -6,8 +6,76 @@ import utils.DBConnection;
 import utils.EmailUtil;
 import utils.JWTUtil;
 import utils.SessionManager;
+import utils.ConfigManager; 
+import utils.CSVUtil;
+import java.util.List;
+import utils.CSVSessionWriter;
+import utils.OTPUtil;
 
 public class LoginController {
+    
+    // ✅ This method performs login using users.csv file
+private static String loginFromCsv(String username, String password, String role) {
+    List<String[]> rows = CSVUtil.readCSV("data/users.csv");
+
+    for (int i = 1; i < rows.size(); i++) { // Skip header
+        String[] row = rows.get(i);
+        if (row.length < 22) continue; // Skip rows with missing data
+
+        String fileUsername = row[0].trim();
+        String filePassword = row[1].trim();
+        String fileRole = row[20].trim(); // 'Department' column as role
+
+        // Check match
+    if (username.equals(fileUsername) && password.equals(filePassword) && role.equalsIgnoreCase(fileRole)) {
+    // ✅ 1. Generate JWT token (fake or real, your choice)
+    String token = JWTUtil.generateToken(username);
+
+    // ✅ 2. Generate OTP (e.g., 6-digit random)
+    String otp = OTPUtil.generateOtpCode(); // Create a new OTP
+    String expiry = OTPUtil.getExpiryTime(5); // 5-minute expiry
+    int attempts = 0; // Start with 0 attempts
+
+    // ✅ 3. Write token and OTP to users_with_token.csv
+    CSVSessionWriter.updateUserSession(username, token, otp, expiry, attempts);
+
+    // ✅ 4. Set session in memory
+    SessionManager.setSession(username, role, token);
+
+    // ✅ 5. Send OTP via email (optional kung meron kang email)
+    EmailUtil.sendOtpCode(getUserEmailFromCSV(username), otp); // You can create this helper
+
+    System.out.println("✅ Login (CSV) successful. OTP sent.");
+    return "success";
+}
+
+    // ✅ Generate JWT token
+    String token = JWTUtil.generateToken(username);
+
+    // ✅ Generate OTP and its expiry
+    String generatedOtp = utils.OTPUtil.generateOtp(); // You should have OTPUtil already
+    String expiryTimeStr = java.time.LocalDateTime.now().plusMinutes(5).toString(); // Expires in 5 mins
+    int otpAttempts = 0; // Reset attempts
+
+    // ✅ Save session in memory (or wherever your SessionManager stores it)
+    SessionManager.setSession(username, role, token);
+
+    // ✅ Save session info into a new CSV (token, OTP, expiry, attempts)
+    utils.CSVSessionWriter.updateUserSession(
+        username,
+        token,
+        generatedOtp,
+        expiryTimeStr,
+        otpAttempts
+    );
+
+    System.out.println("✅ Login successful using CSV + Token + OTP");
+    return "success";
+}
+    
+
+    return "invalid"; // Login failed in CSV mode
+}
     
     
     // ✅ Check if the user already has an active session (used to block multi-device login)
@@ -78,14 +146,20 @@ public static void updateLastActive(String username) {
 
     // This method handles the login logic and returns a String result
     public static String login(String username, String password, String role) {
+    // ✅ Step 1: Check if config is set to CSV mode
+    if (ConfigManager.isUsingCsv()) {
+        return loginFromCsv(username, password, role); // Skip SQL, go CSV
+    }
         
-        // ✅ Step 1: Clean up expired sessions before doing anything
+        // ✅ Step 2: Clean up expired sessions before doing anything
         SessionManager.cleanupExpiredSessions();
         SessionManager.cleanupExpiredRememberTokens(); // Clean tokens on startup/login
+        
+        
         try (Connection conn = DBConnection.getConnection()) {
             
             
-        // ✅ Step 2: Check if user already has an active session
+        // ✅ Step 3: Check if user already has an active session
         if (SessionManager.hasActiveSession(username)) {
             return "active_session"; // 🔒 Tell LoginUI this user is already logged in elsewhere
         }
@@ -221,5 +295,9 @@ public static boolean isDatabaseConnected() {
             JOptionPane.showMessageDialog(null, "Error updating failed attempts: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static String getUserEmailFromCSV(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
